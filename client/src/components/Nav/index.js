@@ -11,7 +11,11 @@ function Nav() {
       <a className="navbar-brand" href="/">
         Workout Tracker
       </a>
-      <p>{store.test}</p>
+      <a className='nav-link' href='/user'>User</a>
+      <a className='nav-link' href='/calendar'>Calendar</a>
+      <a className='nav-link' href='/create'>Create</a>
+      <a className='nav-link' href='/recent'>Recent</a>
+      <a className='nav-link' href='/search'>Search</a>
     </nav>
   );
 }
