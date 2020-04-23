@@ -21,7 +21,9 @@ app.use(passport.session());
 // Connects to mongoDB
 const mongooseOptions = {
   useUnifiedTopology: true,
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true
 };
 mongoose.connect((process.env.MONGODB_URI || "mongodb://localhost/workoutPlannerDB"), mongooseOptions);
 
