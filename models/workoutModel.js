@@ -11,7 +11,7 @@ const workoutSchema = new Schema({
     required: true
   },
   muscleGroup: {
-    type: String,
+    type: Array,
     required: true
   },
   equipment: {
