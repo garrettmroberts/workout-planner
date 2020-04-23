@@ -6,14 +6,29 @@ const { Provider } = StoreContext;
 //function to pass to useReducer()
 const reducer = (state, action) => {
 // TODO: insert switch cases here 
+  switch (action.type){
+    case 'login':
+      return {
+        ...state,
+        isLoggedIn: true,
+        currentUser: action.user,
+        test: action.test
+      };
+    case 'consolelog':
+      console.log('STATE in reducer consolelog: ', state);
+      return state;
+
+    default:
+      console.log('STATE in reducer: ', state);
+      return state;
+  }
 };
 
 const StoreProvider = ({...props}) => {
   const [state, dispatch] = useReducer(reducer , {
-
-    test: 'If you can see this you are reading from the store'
-    // TODO
-    // insert default state object
+    test: 'Default state',
+    isLoggedIn: false,
+    currentUser: {},
   });
   return <Provider value={[state, dispatch]} {...props} />
 };
