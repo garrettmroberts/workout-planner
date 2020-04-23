@@ -24,7 +24,8 @@ const userSchema = new Schema({
     required: true
   },
   goals: Array,
-  equipment: Array
+  equipment: Array,
+  calendar: Array
 })
 
 const User = mongoose.model("User", userSchema);
