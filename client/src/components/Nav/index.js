@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 // import { useStoreContext } from "../../utils/GlobalState";
 
 function Nav() {
@@ -8,14 +9,14 @@ function Nav() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/">
+      <Link className="navbar-brand" to="/">
         Workout Tracker
-      </a>
-      <a className='nav-link' href='/user'>User</a>
-      <a className='nav-link' href='/calendar'>Calendar</a>
-      <a className='nav-link' href='/create'>Create</a>
-      <a className='nav-link' href='/recent'>Recent</a>
-      <a className='nav-link' href='/search'>Search</a>
+      </Link>
+      <Link className='nav-link' to='/user'>User</Link>
+      <Link className='nav-link' to='/calendar'>Calendar</Link>
+      <Link className='nav-link' to='/create'>Create</Link>
+      <Link className='nav-link' to='/recent'>Recent</Link>
+      <Link className='nav-link' to='/search'>Search</Link>
     </nav>
   );
 }
