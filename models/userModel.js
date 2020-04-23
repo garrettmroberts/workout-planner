@@ -11,7 +11,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    match: /[a-zA-Z0-9]{3,}/
+    match: /[a-zA-Z0-9]{8,}/
   },
   firstName: {
     type: String,
@@ -23,9 +23,18 @@ const userSchema = new Schema({
     lowercae: true,
     required: true
   },
-  goals: Array,
-  equipment: Array,
-  calendar: Array
+  goals: {
+    type: Array,
+    default: []
+  },
+  equipment: {
+    type: Array,
+    default: []
+  },
+  calendar: {
+    type: Array,
+    default: []
+  }
 })
 
 const User = mongoose.model("User", userSchema);
