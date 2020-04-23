@@ -16,6 +16,8 @@ router
 router
   .route("/id/:id")
   .get(workoutController.findByID)
+  .delete(workoutController.deleteWorkout)
+  .put(workoutController.updateWorkout)
 
 // Matches with /api/workouts/equipment/:equipment
 router

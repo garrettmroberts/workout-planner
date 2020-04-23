@@ -41,5 +41,24 @@ module.exports = {
     db.Workout.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+
+  // Delete Workout
+  deleteWorkout: function(req, res) {
+    db.Workout.findByIdAndRemove(req.params.id)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+
+  // Update a workout
+  updateWorkout: function(req, res) {
+    db.Workout.findByIdAndUpdate(
+      req.params.id, 
+      req.body, 
+      { new: true }, 
+      (err, result) => {
+        if (err) return res.status(500).send(err);
+      res.send(result);
+    });
   }
 };
