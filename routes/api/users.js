@@ -5,14 +5,14 @@ const userController = require("../../controllers/userController");
 router
   .route("/")
   .get(userController.findAll)
-  .post(userController.addUser)
-  .put(userController.updateUser)
-  .delete(userController.deleteUser);
+  .post(userController.addUser);
 
 // Matches with /api/users/:id
 router
   .route("/:id")
-  .get(userController.findByID);
+  .get(userController.findByID)
+  .put(userController.updateUser)
+  .delete(userController.deleteUser);
 
 
 
