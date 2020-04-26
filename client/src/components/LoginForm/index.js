@@ -34,6 +34,6 @@ export default function LoginForm() {
         <input className="form-control mb-5" ref={userRef} placeholder="Username" />
         <input className="form-control mb-5" required ref={pwRef} placeholder="password" />
         <button className="btn btn-success mt-3 mb-5" type="submit">Sign In</button>
-      </form>
+    </form>
   );
 };
