@@ -5,8 +5,8 @@ import SignUpForm from '../components/SignUpForm';
 
 
 function Home() {
+
   const [signUp, setSignUp] = useState();
-  
   const [store] = useStoreContext();
 
   return(
