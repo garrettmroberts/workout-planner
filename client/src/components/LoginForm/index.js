@@ -1,9 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
+// import API from '../../utils/API';
 
 export default function LoginForm() {
 
-  const [state, dispatch] = useStoreContext();
+  const [, dispatch] = useStoreContext();
 
   const userRef = useRef();
   const pwRef = useRef();
@@ -16,6 +17,7 @@ export default function LoginForm() {
 
   const handleSubmit = (e) =>{
     e.preventDefault();
+    
     dispatch({
       type: 'login',
       user: {
@@ -24,14 +26,14 @@ export default function LoginForm() {
       },
       test: 'you logged in'
     });
-    console.log('State in loginform: ' ,state);
-
+    userRef.current.value = "";
+    pwRef.current.value = "";
   };
   return (
     <form className="form-group mt-5 mb-5" onSubmit={handleSubmit}>
         <input className="form-control mb-5" ref={userRef} placeholder="Username" />
         <input className="form-control mb-5" required ref={pwRef} placeholder="password" />
-        <button className="btn btn-success mt-3 mb-5" type="submit">Sign Up</button>
+        <button className="btn btn-success mt-3 mb-5" type="submit">Sign In</button>
       </form>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import API from '../../utils/API';
 
 function WorkoutForm(){
 
@@ -7,9 +8,36 @@ function WorkoutForm(){
   const nameRef = useRef();
   const groupRef = useRef();
   
+  function makeArray(input){
+    return input.split(', ');
+  };
+
+  function prepareSubmission(){
+    let muscleGroup = makeArray(groupRef.current.value);
+    let equipment = makeArray(equipmentRef.current.value);
+    let newWorkout = {
+      name: nameRef.current.value,
+      category: catRef.current.value,
+      muscleGroup: muscleGroup,
+      equipment: equipment
+    }
+    console.log('NEWWORKOUT: ', newWorkout);
+    return newWorkout;
+  }
+
   function handleSubmit(e){
     e.preventDefault();
-    console.log('you clicked');
+    let workoutToAdd = prepareSubmission();
+    console.log('WTA: ', workoutToAdd);
+
+    API.addWorkout(workoutToAdd)
+    .then(res => console.log("Respone: ", res.data))
+    .catch(err => console.log(err));
+
+    catRef.current.value = '';
+    groupRef.current.value = '';
+    equipmentRef.current.value = '';
+    nameRef.current.value = '';
   }
 
   return (
