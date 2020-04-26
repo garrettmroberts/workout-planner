@@ -39,6 +39,7 @@ module.exports = {
 
   // Add new workout
   addWorkout: function(req, res) {
+    console.log('REQBODY: ' ,req.body);
     db.Workout.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
