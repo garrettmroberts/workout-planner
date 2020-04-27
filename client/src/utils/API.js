@@ -16,5 +16,10 @@ export default {
   // create workout
   addWorkout: function(workoutData){
     return axios.post('/api/workouts', workoutData);
+  },
+  //login
+  login: function(user){
+    console.log('USER IN axios: ', user);
+    return axios.post('/api/users/login', user)
   }
 }
