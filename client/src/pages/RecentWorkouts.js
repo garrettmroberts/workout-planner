@@ -11,7 +11,7 @@ function RecentWorkouts(){
       const user = res.data;
       if(res.data) { dispatch({ type: 'setuser',user: user});}
     }).catch(err=> console.log(err));
-  },[]);
+  });
 
   return(
     <h1>Recent Workouts</h1>

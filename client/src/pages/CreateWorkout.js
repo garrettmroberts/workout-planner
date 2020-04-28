@@ -4,7 +4,7 @@ import { useStoreContext } from '../utils/GlobalState'
 import API from '../utils/API';
 
 function CreateWorkout(){
-  const [store, dispatch] = useStoreContext();
+  const [, dispatch] = useStoreContext();
 
   //get user data from api and store to global context
   useEffect(()=>{
@@ -12,9 +12,8 @@ function CreateWorkout(){
       const user = res.data;
       if(res.data) { dispatch({ type: 'setuser',user: user});}
     }).catch(err=> console.log(err));
-  },[]);
+  });
 
-  console.log('STORE in createworkout ', store);
   return(
     <div>
       <h1>Create Workout</h1>
