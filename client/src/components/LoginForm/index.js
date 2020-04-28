@@ -4,34 +4,33 @@ import API from '../../utils/API';
 
 export default function LoginForm() {
 
-  const [, dispatch] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
 
   const userRef = useRef();
   const pwRef = useRef();
 
   useEffect(()=> {
-    dispatch({
-      type: 'consolelog'
-    });
+    console.log('STATE IN DISPATCH', state);
   });
-
   const handleSubmit = (e) =>{
     e.preventDefault();
-
     const user= {
       email: userRef.current.value,
       password: pwRef.current.value,
     }
+    API.login(user).then(res => {
 
-    API.login(user).then(res => console.log(res.data))
+      console.log('ABOUT TO CALL DISPATACH, RES.DATA: ', res.data);
+
+      // update global state with current user data
+      dispatch({
+        type: 'setuser',
+        user: res.data,
+        test: 'we got us a user'
+      })
+    })
     .catch(err => console.log(err));
     
-    dispatch({
-      type: 'login',
-      user,
-      test: 'you logged in'
-    });
-
     userRef.current.value = "";
     pwRef.current.value = "";
   };
