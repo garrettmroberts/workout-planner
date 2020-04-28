@@ -7,11 +7,12 @@ function RecentWorkouts(){
   const [, dispatch] = useStoreContext();
   //get user data from api and store to global context
   useEffect(()=>{
+    console.log('USEEFFECT Recent workouts');
     API.getLoggedInUser().then(res =>{
       const user = res.data;
       if(res.data) { dispatch({ type: 'setuser',user: user});}
     }).catch(err=> console.log(err));
-  });
+  },[]);
 
   return(
     <h1>Recent Workouts</h1>

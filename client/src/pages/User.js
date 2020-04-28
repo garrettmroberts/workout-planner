@@ -14,7 +14,7 @@ function User() {
       const user = res.data;
       if(res.data) { dispatch({ type: 'setuser',user: user});}
     }).catch(err=> console.log(err));
-  });
+  },[]);
 
   if (!store.isLoggedIn) {
     return(
