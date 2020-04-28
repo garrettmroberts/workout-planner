@@ -37,6 +37,14 @@ const userSchema = new Schema({
   }
 })
 
+
+//function called from passport to check password;
+userSchema.methods.verifyPassword = function verifyPassword (pw) {
+  if (this.password === pw){
+    return true;
+  } else { return false; }
+};
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

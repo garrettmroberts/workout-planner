@@ -28,6 +28,9 @@ function SignUpForm(){
         firstName: firstRef.current.value,
         lastName: lastRef.current.value
       };
+
+      //adds user to the database
+      // DOES NOT USE PASSPORT
       API.addUser(newUser)
       .then(res => console.log('res.data ', res.data))
       .catch(err => console.log(err));

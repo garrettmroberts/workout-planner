@@ -10,13 +10,14 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-// Connects setver to routes
-app.use(routes);
-
 // Enables passport verification
 app.use(session({ secret: 'apple butter', resave: true, saveUninitialize: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Connects setver to routes
+app.use(routes);          // MOVED this line after passport.initialize()
+                          //solved error of not having passport initialized.
 
 // Connects to mongoDB
 const mongooseOptions = {
