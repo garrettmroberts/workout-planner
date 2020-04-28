@@ -40,13 +40,9 @@ const userSchema = new Schema({
 
 //function called from passport to check password;
 userSchema.methods.verifyPassword = function verifyPassword (pw) {
-  console.log('THIS.MODEL ', this.model);
-  if (this.model.password === pw){
+  if (this.password === pw){
     return true;
-  } else {
-    console.log('bad password');
-    return false;
-  }
+  } else { return false; }
 };
 
 const User = mongoose.model("User", userSchema);
