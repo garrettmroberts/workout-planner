@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useStoreContext } from "../utils/GlobalState";
+import "../components/GoalsForm";
+import "./calendar.css";
+import GoalsForm from '../components/GoalsForm';
 
 function Calendar(){
+  const [formState, setFormState] =  useState({
+    goals: "",
+    equipment: [],
+    submitted: "false"
+  });
+  const [store] = useStoreContext();
   return(
-    <h1>Calendar</h1>
+    <div className="wrapper">
+      <GoalsForm state={formState} setState={setFormState}/>
+    </div>
   )
 };
 export default Calendar;
