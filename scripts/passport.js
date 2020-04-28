@@ -9,7 +9,6 @@ passport.use(new LocalStrategy(
     console.log('email ', email);        // - wasn't recognizing done as a function
     console.log('done: ', done);
     db.User.findOne({email: email}, (err, user) => {
-      console.log('USER', user);
       if (err) { return done(err); }
       if (!user) { return done(null, false) }
       //Also would like to add an encryption step when creating users
@@ -25,7 +24,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   db.User.findOne({_id: id})
-    .then(done(null, result));
+    .then(result => done(null, result));
 });
 
 module.exports = passport;
