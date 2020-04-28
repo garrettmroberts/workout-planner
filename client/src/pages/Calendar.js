@@ -7,8 +7,7 @@ import GoalsForm from '../components/GoalsForm';
 function Calendar(){
   const [formState, setFormState] =  useState({
     goals: "",
-    equipment: [],
-    submitted: "false"
+    equipment: []
   });
   const [store] = useStoreContext();
   return(
