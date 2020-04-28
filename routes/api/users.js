@@ -18,12 +18,9 @@ router
 //Test route for passport authentication
 router
   .route('/login')
-  .get((req, res) => console.log('you hit the route'))
   .post(passport.authenticate('local'), (req, res) => {
       console.log('REQ.USER: ', req.user);
-      res.json('user');
+      res.json(req.user);
     });
   
-
-
 module.exports = router;
