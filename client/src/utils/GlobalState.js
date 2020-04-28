@@ -17,7 +17,18 @@ const reducer = (state, action) => {
     case 'consolelog':
       console.log('STATE in reducer consolelog: ', state);
       return state;
-
+    case 'setuser':
+      //set currentUser, but clear password 
+      //keeping isLoggedIn boolean for the time being
+      let userToSet = action.user;
+      userToSet.password = '';
+      console.log('USERTOSET: ', userToSet);
+      return {
+        ...state,
+        currentUser: userToSet,
+        test: action.test,
+        isLoggedIn: true
+      }
     default:
       console.log('STATE in reducer: ', state);
       return state;
