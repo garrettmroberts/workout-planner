@@ -21,13 +21,17 @@ const reducer = (state, action) => {
       //set currentUser, but clear password 
       //keeping isLoggedIn boolean for the time being
       let userToSet = action.user;
-      userToSet.password = '';
-      console.log('USERTOSET: ', userToSet);
+      delete userToSet.password;
       return {
         ...state,
         currentUser: userToSet,
         test: action.test,
         isLoggedIn: true
+      }
+    case 'logout':
+      return{
+        ...state,
+        currentUser: null
       }
     default:
       console.log('STATE in reducer: ', state);
@@ -37,9 +41,7 @@ const reducer = (state, action) => {
 
 const StoreProvider = ({...props}) => {
   const [state, dispatch] = useReducer(reducer , {
-    test: 'Default state',
-    isLoggedIn: false,
-    currentUser: {},
+    currentUser: null,
   });
   return <Provider value={[state, dispatch]} {...props} />
 };

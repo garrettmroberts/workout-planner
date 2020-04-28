@@ -15,12 +15,30 @@ router
   .put(userController.updateUser)
   .delete(userController.deleteUser);
 
-//Test route for passport authentication
+//route for passport authentication
 router
   .route('/login')
   .post(passport.authenticate('local'), (req, res) => {
-      console.log('REQ.USER: ', req.user);
       res.json(req.user);
+    });
+//logout route for passport
+router
+    .route('/logout')
+    .post((req,res)=> {
+      req.logout();
+      res.json({message: 'you logged out'});
+    })
+
+//route to check users login status
+router
+    .route('/getloggedinuser')
+    .post((req,res)=>{
+      console.log('in the route');
+      if(req.user){
+        console.log('REQ.USER', req.user);
+        return res.json(req.user);
+      }
+      return res.json(null);
     });
   
 module.exports = router;
