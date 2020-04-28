@@ -17,6 +17,7 @@ function Home() {
       if(res.data) { dispatch({ type: 'setuser',user: user});}
     }).catch(err=> console.log(err));
   },[]);
+  
   const logOut = () =>{
     API.logout().then(res =>{
       console.log('RES IN LOGOUT ', res);

@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import WorkoutForm from '../components/WorkoutForm';
 import { useStoreContext } from '../utils/GlobalState'
+import API from '../utils/API';
 
 function CreateWorkout(){
-  const [store] = useStoreContext();
+  const [store, dispatch] = useStoreContext();
+
+  //get user data from api and store to global context
+  useEffect(()=>{
+    API.getLoggedInUser().then(res =>{
+      const user = res.data;
+      if(res.data) { dispatch({ type: 'setuser',user: user});}
+    }).catch(err=> console.log(err));
+  },[]);
+
   console.log('STORE in createworkout ', store);
   return(
     <div>
