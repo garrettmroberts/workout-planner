@@ -19,7 +19,6 @@ export default {
   },
   //login
   login: function(user){
-    console.log('USER IN axios: ', user);
     return axios.post('/api/users/login', user)
   }
 }
