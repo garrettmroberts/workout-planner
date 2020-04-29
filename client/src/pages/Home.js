@@ -29,10 +29,8 @@ function Home() {
     } else {
       return (
         <div>
-          <button className="btn btn-success mt-3 mb-5" onClick={()=>setSignUp(!signUp)}>
-          {`${signUp ? 'Login': 'Sign up'} `}
-          </button>
-          {signUp ? <SignUpForm /> : <LoginForm /> }
+          {state.showSignUp ? <SignUpForm /> : <p></p> }
+          {state.showLogIn ? <LoginForm /> : <p></p> }
       </div>
       );
     }

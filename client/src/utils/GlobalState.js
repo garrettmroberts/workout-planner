@@ -34,6 +34,18 @@ const reducer = (state, action) => {
         isLoggedIn: false,
         currentUser: null
       }
+    case 'showsignup':
+      return {
+        ...state,
+        showLogIn: false,
+        showSignUp: true
+      }
+    case 'showlogin':
+      return{
+        ...state,
+        showSignUp: false,
+        showLogIn: true,
+      }
     default:
       console.log('STATE in reducer: ', state);
       return state;

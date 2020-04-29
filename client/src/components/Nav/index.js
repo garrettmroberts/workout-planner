@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useStoreContext } from "../../utils/GlobalState";
 import API from '../../utils/API';
+import './style.css'
 
 function Nav() {
 
@@ -14,6 +15,13 @@ function Nav() {
 
     }).catch(err => console.log(err));
   }
+
+  function signUp() {
+    dispatch({ type: 'showsignup' });
+  };
+  function logIn() {
+    dispatch({type: 'showlogin'});
+  };
 
   if (store.isLoggedIn) {
     return(
@@ -32,14 +40,18 @@ function Nav() {
   } else {
     return(
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className='row'>
         <Link className="navbar-brand" to="/">
           Workout Tracker
         </Link>
-        <Link className='nav-link' to='/signUp'>Sign Up</Link>
-        <Link className='nav-link' to='/signIn'>Sign In</Link>
+        <div className='nav-btns'>
+          <button className='btn btn-info left-btn' onClick={signUp}>Sign Up</button>
+          <button className='btn btn-info right-btn' onClick={logIn}>Log In</button>
+        </div>
+        </div>
       </nav>
     )
   }
-}
+};
 
 export default Nav;

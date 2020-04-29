@@ -1,0 +1,10 @@
+button {
+  max-width: 155px;
+}
+
+nav {
+  justify-content: space-between;
+}
+.nav-btns{
+  text-align: right;
+}
