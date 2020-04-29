@@ -6,12 +6,11 @@ import "./calendar.css";
 
 function Calendar() {
   const [store] = useStoreContext();
-  
+ 
   return(
     <div className="wrapper">
-      <GoalsForm />
-      <WorkoutCalendar />
+      {(!store.currentUser.goal) ? <GoalsForm /> : <WorkoutCalendar />}
     </div>
-  );
+  )
 };
 export default Calendar;
