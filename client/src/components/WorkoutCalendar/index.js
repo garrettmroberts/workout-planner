@@ -4,6 +4,7 @@ import { useStoreContext, StoreProvider } from "../../utils/GlobalState";
 import Card from "../Card";
 
 function WorkoutCalendar() {
+  console.log("This is the calendar component.");
 
   let dummyData = [
     {
