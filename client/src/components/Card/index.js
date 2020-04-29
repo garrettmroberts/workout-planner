@@ -6,10 +6,10 @@ function Card(props) {
     <div className="card border-dark mb-3">
       <div className="card-header">Header</div>
       <div className="card-body text-dark">
-        <ul className="list-group">
-          <li>A thing</li>
-          <li>Another thing</li>
-          <li>And another</li>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">A thing</li>
+          <li className="list-group-item">Another thing</li>
+          <li className="list-group-item">And another</li>
         </ul>
       </div>
     </div>
