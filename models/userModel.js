@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -40,10 +41,12 @@ const userSchema = new Schema({
 
 //function called from passport to check password;
 userSchema.methods.verifyPassword = function verifyPassword (pw) {
-  if (this.password === pw){
-    return true;
-  } else { return false; }
+ return bcrypt.compareSync(pw, this.password);
 };
+//function to hash user passwords as they are saved
+userSchema.pre(['insertMany', 'save'], function(){
+  this.password = bcrypt.hashSync(this.password);
+});
 
 const User = mongoose.model("User", userSchema);
 

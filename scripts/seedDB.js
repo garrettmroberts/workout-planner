@@ -9,21 +9,6 @@ const mongooseOptions = {
 
 mongoose.connect((process.env.MONGODB_URI || "mongodb://localhost/workoutPlannerDB"), mongooseOptions);
 
-const userSeed = [
-  {
-    email: "gurtdegurt@gurtmail.com",
-    password: "ahdc423H",
-    firstName: "Gurt",
-    lastName: "deGurt"
-  },
-  {
-    email: "chimichanga@imallama.com",
-    password: "12345678",
-    firstName: "chimichanga",
-    lastName: "imallama"
-  }
-]
-
 const workoutSeed = [
   {
     name: "barbell bench press",
@@ -652,14 +637,3 @@ db.Workout.deleteMany({})
   .catch(err => {
     console.error(err);
   });
-
-  db.User.deleteMany({})
-    .then(() => db.User.collection.insertMany(userSeed))
-    .then(data => {
-      console.log(data.result.n + " users inserted");
-      process.exit(0);
-    })
-    .catch(err => {
-      console.error(err);
-      process.exit(1);
-    });
