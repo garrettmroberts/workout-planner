@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import API from "../../utils/API";
+import { useStoreContext } from "../../utils/GlobalState"; 
 import "./style.css";
 
-function GoalsForm({state, setState}) {
+function GoalsForm() {
+  const [formState, setFormState] = useState({
+    goal: "",
+    equipment: []
+  });
+
+  const [store] = useStoreContext();
 
   function updateState(event) {
     // Prevents deafult
@@ -12,9 +20,9 @@ function GoalsForm({state, setState}) {
     const value = event.target.innerText;
 
     // Updates Goal
-    if (type === "goals") {
+    if (type === "goal") {
       // Updates goal state
-      setState({...state, [type]: value});
+      setFormState({...formState, [type]: value});
 
       // Clears "active class from goals section"
       const buttons = document.querySelectorAll(".goalsbtn");
@@ -32,24 +40,38 @@ function GoalsForm({state, setState}) {
 
       // Adds value to equipment state if recently made active
       if (event.target.classList.contains("active")){
-        setState({...state, [type]: [...state.equipment, value]}); 
+        setFormState({...formState, [type]: [...formState.equipment, value]}); 
       } else {
         // Here we remove from array if made inactive
-        const idx = state.equipment.indexOf(value);
+        const idx = formState.equipment.indexOf(value);
 
         // A copy of equipment is created, spliced, and placed into equipment
-        let newArr = state.equipment
-        state.equipment.splice(idx, 1);
-        setState({...state, [type]: newArr});
-        console.log(state);
-
+        let newArr = formState.equipment
+        formState.equipment.splice(idx, 1);
+        setFormState({...formState, [type]: newArr});
       }
     };
   };
 
   function handleFormSubmit(event) {
+    // Prevents event default
     event.preventDefault();
-  }
+
+    // Updates active user's info in DB
+    const id = store.currentUser._id;
+    const userData = formState;
+    API.updateUser(userData, id);
+
+    // Updates the active user's data in global state
+    store.currentUser.goal = formState.goal;
+    store.currentUser.equipment = formState.equipment;
+
+    // Clears form
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(button => {
+      button.classList.remove("active");
+    });
+  };
 
   return(
     <div id="content-container">
@@ -61,8 +83,8 @@ function GoalsForm({state, setState}) {
           <h4>What is your main goal?</h4>
         </div>
         <div className="buttons-section">
-          <button data-type="goals" onClick={updateState} className="goalsbtn">Bulk up</button>
-          <button data-type="goals" onClick={updateState} className="goalsbtn">Cut weight</button>
+          <button data-type="goal" onClick={updateState} className="goalsbtn">Bulk up</button>
+          <button data-type="goal" onClick={updateState} className="goalsbtn">Cut weight</button>
         </div>
         <div className="form-header">
           <h4>What equipment do you have available?</h4>
