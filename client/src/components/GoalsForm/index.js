@@ -57,20 +57,45 @@ function GoalsForm() {
     // Prevents event default
     event.preventDefault();
 
-    // Updates active user's info in DB
-    const id = store.currentUser._id;
-    const userData = formState;
-    API.updateUser(userData, id);
-
-    // Updates the active user's data in global state
-    store.currentUser.goal = formState.goal;
-    store.currentUser.equipment = formState.equipment;
-
+    
     // Clears form
     const buttons = document.querySelectorAll("button");
     buttons.forEach(button => {
       button.classList.remove("active");
     });
+    
+    // Updates the active user's data in global state
+    store.currentUser.goal = formState.goal;
+    store.currentUser.equipment = formState.equipment;
+
+    // Updates active user's info in DB
+    const id = store.currentUser._id;
+    const userData = formState;
+    API.updateUser(userData, id);
+
+    // Generates a workout based on user choice
+    if (store.currentUser.goal === "Bulk up") {
+      generateBulkWorkout();
+    } else {
+      generateCutWorkout();
+    };
+
+  };
+
+  function generateBulkWorkout() {
+    API.getWorkouts()
+      .then(res => {
+        const workouts = res.data;
+        console.log("GENERATING BULK");
+      })
+  };
+
+  function generateCutWorkout() {
+    API.getWorkouts()
+      .then(res => {
+        const workouts = res.data;
+        console.log("GENERATING CUT");
+      })
   };
 
   return(
