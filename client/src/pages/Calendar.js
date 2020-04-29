@@ -5,24 +5,12 @@ import WorkoutCalendar from "../components/WorkoutCalendar";
 import API from '../utils/API';
 import "./calendar.css";
 
-function Calendar(){
-  const [formState, setFormState] =  useState({
-    goals: "",
-    equipment: []
-  });
-
-  const [, dispatch] = useStoreContext();
-  //get user data from api and store to global context
-  useEffect(()=>{
-    API.getLoggedInUser().then(res =>{
-      const user = res.data;
-      if(res.data) { dispatch({ type: 'setuser',user: user});}
-    }).catch(err=> console.log(err));
-  },[]);
+function Calendar() {
+  const [store] = useStoreContext();
   
   return(
     <div className="wrapper">
-      <GoalsForm state={formState} setState={setFormState}/>
+      <GoalsForm />
       <WorkoutCalendar />
     </div>
   );

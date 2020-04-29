@@ -9,6 +9,10 @@ export default {
   addUser: function(userData){
     return axios.post('/api/users', userData);
   },
+  // Updates a user
+  updateUser: function(userData, id) {
+    return axios.put(`/api/users/${id}`, userData);
+  },
   // get all users
   findAllUsers: function(){
     return axios.get('/api/users');
