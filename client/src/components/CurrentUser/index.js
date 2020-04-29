@@ -7,21 +7,49 @@ function CurrentUser (){
   const [state,] = useStoreContext();
   const user = state.currentUser;
 
-  function generateLists(){
+  const listItems= (itemArray, itemName) => {
+    if (itemArray.length > 0){
+      return (
+        <div>
+        {itemArray.map((e,i) => (
+          <li key={i}>
+            {e}
+          </li>
+        ))}
+        </div>
+      );
+    } else {
+      return (
+        <p>No {itemName} Added</p>
+      );
+    }
+  };
+
+
+  const getRender = () => {
     return (
-      <div className="card mb-3">
-        <div className="row">
-          <div className="col-md-8">
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+      <div>
+        <div className="card mb-3">
+          <div className="card-body">
+            <h5 className="card-title">My Equipment</h5>
+              {listItems(user.equipment, 'Equipment')}
             </div>
+        </div>
+        <div className="card mb-3">
+          <div className="card-body">
+            <h5 className="card-title">My Goals</h5>
+            {listItems(user.goals, 'Goals')}
+          </div>
+        </div>
+        <div className="card mb-3">
+          <div className="card-body">
+            <h5 className="card-title">My Calendar</h5>
+            {listItems(user.calendar, 'Calendar')}
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -30,8 +58,8 @@ function CurrentUser (){
           <h2 className="display-4">Welcome, {user.firstName}</h2>
         </div>
       </div>
-      {generateLists()}
+      {getRender()}
     </div>
-  )
+  );
 };
 export default CurrentUser;

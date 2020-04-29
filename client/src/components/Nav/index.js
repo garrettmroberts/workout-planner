@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useStoreContext } from "../../utils/GlobalState";
 import API from '../../utils/API';
-import './style.css'
+import './style.css';
 
 function Nav() {
 
