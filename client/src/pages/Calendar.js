@@ -4,17 +4,12 @@ import GoalsForm from "../components/GoalsForm";
 import WorkoutCalendar from "../components/WorkoutCalendar";
 import "./calendar.css";
 
-function Calendar(){
-  const [formState, setFormState] =  useState({
-    goals: "",
-    equipment: []
-  });
-
+function Calendar() {
   const [store] = useStoreContext();
   
   return(
     <div className="wrapper">
-      <GoalsForm state={formState} setState={setFormState}/>
+      <GoalsForm />
       <WorkoutCalendar />
     </div>
   );

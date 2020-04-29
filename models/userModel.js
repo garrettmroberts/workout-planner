@@ -23,9 +23,9 @@ const userSchema = new Schema({
     lowercase: true,
     required: true
   },
-  goals: {
-    type: Array,
-    default: []
+  goal: {
+    type: String,
+    default: ""
   },
   equipment: {
     type: Array,
