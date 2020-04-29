@@ -9,12 +9,14 @@ function Calendar(){
     goals: "",
     equipment: []
   });
-  // const [store] = useStoreContext();
+
+  const [store] = useStoreContext();
+  
   return(
     <div className="wrapper">
       <GoalsForm state={formState} setState={setFormState}/>
       <WorkoutCalendar />
     </div>
-  )
+  );
 };
 export default Calendar;
