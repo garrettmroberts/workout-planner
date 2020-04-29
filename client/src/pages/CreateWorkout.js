@@ -8,7 +8,6 @@ function CreateWorkout(){
 
   //get user data from api and store to global context
   useEffect(()=>{
-    console.log('USEEFFECT CREATEWORKOUT');
     API.getLoggedInUser().then(res =>{
       const user = res.data;
       if(res.data) { dispatch({ type: 'setuser',user: user});}
