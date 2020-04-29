@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import API from "../../utils/API";
 import { useStoreContext } from "../../utils/GlobalState"; 
+import Calendar from "../../pages/Calendar";
 import "./style.css";
+
 
 function GoalsForm() {
   const [formState, setFormState] = useState({
     goal: "",
     equipment: []
   });
-
-  const [store] = useStoreContext();
+  
+  const [state, dispatch] = useStoreContext();
 
   function updateState(event) {
     // Prevents deafult
@@ -65,21 +67,25 @@ function GoalsForm() {
     });
     
     // Updates the active user's data in global state
-    store.currentUser.goal = formState.goal;
-    store.currentUser.equipment = formState.equipment;
+    let updatedUser = state.currentUser;
+    updatedUser.goal = formState.goal;
+    updatedUser.equipment = formState.equipment;
+    dispatch({type: 'updateUser', payload: updatedUser });
+
+    // store.currentUser.goal = formState.goal;
+    // store.currentUser.equipment = formState.equipment;
 
     // Updates active user's info in DB
-    const id = store.currentUser._id;
+    const id = state.currentUser._id;
     const userData = formState;
     API.updateUser(userData, id);
 
     // Generates a workout based on user choice
-    if (store.currentUser.goal === "Bulk up") {
+    if (state.currentUser.goal === "Bulk up") {
       generateBulkWorkout();
     } else {
       generateCutWorkout();
     };
-
   };
 
   function generateBulkWorkout() {

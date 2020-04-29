@@ -34,6 +34,11 @@ const reducer = (state, action) => {
         isLoggedIn: false,
         currentUser: null
       }
+    case 'updateUser':
+        return {
+          ...state,
+          currentUser: action.payload
+        }
     default:
       console.log('STATE in reducer: ', state);
       return state;
