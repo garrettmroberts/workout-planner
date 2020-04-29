@@ -4,14 +4,12 @@ import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
 import API from '../utils/API';
 import CurrentUser from '../components/CurrentUser';
+import Greeting from '../components/Greeting';
 
 
 function Home() {
-
-  const [signUp, setSignUp] = useState();
-
   const [state, dispatch] = useStoreContext();
-
+  
   //get user data from api and store to global context
   useEffect(()=> {
     API.getLoggedInUser().then(res =>{
@@ -29,9 +27,10 @@ function Home() {
     } else {
       return (
         <div>
+          <Greeting />
           {state.showSignUp ? <SignUpForm /> : <p></p> }
           {state.showLogIn ? <LoginForm /> : <p></p> }
-      </div>
+        </div>
       );
     }
   };

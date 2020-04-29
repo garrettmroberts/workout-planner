@@ -16,42 +16,51 @@ function Nav() {
     }).catch(err => console.log(err));
   }
 
-  function signUp() {
+  const signUp =  () => {
     dispatch({ type: 'showsignup' });
   };
-  function logIn() {
+  const logIn = () => {
     dispatch({type: 'showlogin'});
   };
 
-  if (store.isLoggedIn) {
-    return(
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
-          Workout Tracker
-        </Link>
-        <Link className='nav-link' to='/user'>User</Link>
-        <Link className='nav-link' to='/calendar'>Calendar</Link>
-        <Link className='nav-link' to='/create'>Create</Link>
-        <Link className='nav-link' to='/recent'>Recent</Link>
-        <Link className='nav-link' to='/search'>Search</Link>
-        <button className='btn btn-warning' onClick={logOut}>Logout</button>
-      </nav>
-    );
-  } else {
-    return(
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className='row'>
-        <Link className="navbar-brand" to="/">
-          Workout Tracker
-        </Link>
-        <div className='nav-btns'>
-          <button className='btn btn-info left-btn' onClick={signUp}>Sign Up</button>
-          <button className='btn btn-info right-btn' onClick={logIn}>Log In</button>
-        </div>
-        </div>
-      </nav>
-    )
-  }
+  const setRender = () => {
+    if (store.isLoggedIn) {
+      return(
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <Link className="navbar-brand" to="/">
+            Workout Tracker
+          </Link>
+          <Link className='nav-link' to='/user'>User</Link>
+          <Link className='nav-link' to='/calendar'>Calendar</Link>
+          <Link className='nav-link' to='/create'>Create</Link>
+          <Link className='nav-link' to='/recent'>Recent</Link>
+          <Link className='nav-link' to='/search'>Search</Link>
+          <button className='btn btn-warning' onClick={logOut}>Logout</button>
+        </nav>
+      );
+    } else {
+      return(
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className='row'>
+          <Link className="navbar-brand" to="/">
+            Workout Tracker
+          </Link>
+          <div className='nav-btns'>
+            <button className='btn btn-info left-btn' onClick={signUp}>Sign Up</button>
+            <button className='btn btn-info right-btn' onClick={logIn}>Log In</button>
+          </div>
+          </div>
+        </nav>
+      )
+    }
+  };
+
+  return (
+    <div>
+      {setRender()}
+    </div>
+  );
+  
 };
 
 export default Nav;
