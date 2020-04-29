@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStoreContext } from "../utils/GlobalState";
 import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
+import API from '../utils/API';
 
 
 function Home() {
 
   const [signUp, setSignUp] = useState();
-  const [store] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
+
+  //get user data from api and store to global context
+  useEffect(()=>{
+    console.log('USEEFFECT HOME');
+    API.getLoggedInUser().then(res =>{
+      const user = res.data;
+      if(res.data) { dispatch({ type: 'setuser',user: user});}
+    }).catch(err=> console.log(err));
+  },[]);
 
   return(
     <div>
@@ -16,7 +26,7 @@ function Home() {
         {`${signUp ? 'Login': 'Sign up'} `}
       </button>
       {signUp ? <SignUpForm /> : <LoginForm /> }
-      <p>{store.test}</p>
+      <p>{state.test}</p>
     </div>
   );
 };
