@@ -15,4 +15,6 @@ h2{
 .cal-card{
   width: 85%;
   align-self: center;
+  text-align: left;
+  align-content: flex-start;
 }

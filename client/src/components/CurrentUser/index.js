@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import './style.css';
+import Card from "../Card";
 
 function CurrentUser (){
 
@@ -31,18 +32,25 @@ function CurrentUser (){
 
   const setCalendar = () => {
     console.log(user.calendar);
+
     if(user.calendar.length > 0){
+      const workoutSection = user.calendar[0].workouts.map(workout => {
+        if (workout.category === "strength") {
+          return <li className="list-group-item" key={Math.floor(Math.random() * 100000)}>
+            <strong>{workout.name}</strong> - {workout.sets}
+          </li>
+        } else {
+          return <li className="list-group-item" key={Math.floor(Math.random() * 100000)}>
+            <strong>{workout.name}</strong> - {workout.time}
+          </li >
+        }
+      })
       return (
         <div className="card cal-card border-dark mb-3">
           <div className="card-header">Up next on my calendar:{' '} {user.calendar[0].day}</div>
           <div className="card-body text-dark">
             <ul className="list-group list-group-flush">
-              {user.calendar[0].workouts.map((wo , i) => (
-                <li className='list-group-item' key={i}>
-                  <p>exercise: {' ', wo.name}</p>
-                  <p>sets: {' ', wo.sets}</p>
-                </li>
-              ))}
+              {workoutSection}
             </ul>
           </div>
         </div>
