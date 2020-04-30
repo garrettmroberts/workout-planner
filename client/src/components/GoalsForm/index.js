@@ -112,7 +112,16 @@ function GoalsForm() {
         const exercisesSortedByDate = collectExerciseDays(filtered);
         const userCalendar = buildCalendarDays(exercisesSortedByDate);
         const finishedCalendar = addReps(userCalendar);
-        console.log(finishedCalendar);
+
+        
+        // Updates the active user's calendar in global state
+        let updatedUser = state.currentUser;
+        updatedUser.calendar = finishedCalendar;
+        dispatch({ type: 'updateUser', payload: updatedUser });
+
+        // Updates active user's info in DB
+        const id = state.currentUser._id;
+        API.updateUser({calendar: finishedCalendar}, id);
       });
   };
 
