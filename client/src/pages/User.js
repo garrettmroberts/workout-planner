@@ -3,6 +3,9 @@ import { useStoreContext } from "../utils/GlobalState";
 import SignUpForm from '../components/SignUpForm'
 import API from '../utils/API';
 
+//Probably dont need this page but Ill leave it for now
+
+
 //placeholder to test global store and nav
 function User() {
   

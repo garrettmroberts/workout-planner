@@ -33,9 +33,7 @@ router
 router
     .route('/getloggedinuser')
     .post((req,res)=>{
-      console.log('in the route');
       if(req.user){
-        console.log('REQ.USER', req.user);
         return res.json(req.user);
       }
       return res.json(null);

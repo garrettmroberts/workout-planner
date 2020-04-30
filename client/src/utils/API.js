@@ -5,6 +5,18 @@ export default {
   getWorkouts: function(){
     return axios.get('/api/workouts');
   },
+  //search for workouts by equipement
+  findByEquipment: function(equipment){
+    return axios.get('/api/workouts/equipment/'+ equipment);
+  },
+  //search for workouts by muscle
+  findByMuscle: function(muscle){
+    return axios.get('/api/workouts/musclegroup/' + muscle);
+  },
+  //search for workouts by category
+  findByCategory: function(category){
+    return axios.get('/api/workouts/category/' + category);
+  },
   // add user from login
   addUser: function(userData){
     return axios.post('/api/users', userData);
