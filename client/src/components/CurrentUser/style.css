@@ -8,3 +8,11 @@
 h2{
   text-align: center;
 }
+.user-card{
+  width: 35%;
+  min-height: 100px;
+}
+.cal-card{
+  width: 85%;
+  align-self: center;
+}

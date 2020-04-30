@@ -33,7 +33,7 @@ function CurrentUser (){
       <div className ='container'>
         <div className='row'>
           <div className='col'>
-            <div className="card border-dark mb-3">
+            <div className="card user-card border-dark mb-3">
               <div className="card-header">My Equipment</div>
                 <div className="card-body text-dark">
                   <ul className="list-group list-group-flush">
@@ -43,7 +43,7 @@ function CurrentUser (){
             </div>
           </div>
           <div className='col'>
-            <div className="card border-dark mb-3">
+            <div className="card user-card border-dark mb-3">
               <div className="card-header">My Goal</div>
                 <div className="card-body text-dark">
                   <ul className="list-group list-group-flush">
@@ -53,7 +53,7 @@ function CurrentUser (){
             </div>
           </div>
         </div>
-        <div className="card border-dark mb-3">
+        <div className="card cal-card border-dark mb-3">
           <div className="card-header">My Calendar</div>
             <div className="card-body text-dark">
               <ul className="list-group list-group-flush">
