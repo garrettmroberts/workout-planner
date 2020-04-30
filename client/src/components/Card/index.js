@@ -1,15 +1,25 @@
 import React from "react";
 import "./style.css"
 
-function Card(props) {
+function Card({ day, workouts}) {
+  const workoutSection = workouts.map(workout => {
+    if (workout.category === "strength") {
+      return <li className="list-group-item" key={Math.floor(Math.random() * 100000)}>
+        <strong>{workout.name}</strong> - {workout.sets}
+      </li>
+    } else {
+      return <li className="list-group-item" key={Math.floor(Math.random() * 100000)}>
+        <strong>{workout.name}</strong> - {workout.time}
+      </li >
+    }
+  })
+
   return(
     <div className="card border-dark mb-3">
-      <div className="card-header">Header</div>
+      <div className="card-header">{day}</div>
       <div className="card-body text-dark">
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">A thing</li>
-          <li className="list-group-item">Another thing</li>
-          <li className="list-group-item">And another</li>
+          {workoutSection}
         </ul>
       </div>
     </div>
