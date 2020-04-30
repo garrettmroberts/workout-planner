@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import API from "../../utils/API";
 import { useStoreContext } from "../../utils/GlobalState"; 
-import Calendar from "../../pages/Calendar";
 import "./style.css";
-
 
 function GoalsForm() {
   const [formState, setFormState] = useState({
@@ -72,36 +70,48 @@ function GoalsForm() {
     updatedUser.equipment = formState.equipment;
     dispatch({type: 'updateUser', payload: updatedUser });
 
-    // store.currentUser.goal = formState.goal;
-    // store.currentUser.equipment = formState.equipment;
-
     // Updates active user's info in DB
     const id = state.currentUser._id;
     const userData = formState;
     API.updateUser(userData, id);
 
-    // Generates a workout based on user choice
-    if (state.currentUser.goal === "Bulk up") {
-      generateBulkWorkout();
-    } else {
-      generateCutWorkout();
-    };
+    // Generates a workout
+    buildCalendar();
   };
 
-  function generateBulkWorkout() {
+  const buildCalendar = () => {
     API.getWorkouts()
+      // res.data gets all workouts
       .then(res => {
-        const workouts = res.data;
-        console.log("GENERATING BULK");
-      })
-  };
-
-  function generateCutWorkout() {
-    API.getWorkouts()
-      .then(res => {
-        const workouts = res.data;
-        console.log("GENERATING CUT");
-      })
+        // Filters exercises to ones included in user's available equipment
+        let filtered = [];
+        if (state.currentUser.equipment.length > 0) {
+          state.currentUser.equipment.forEach(item => {
+            res.data.forEach(data => {
+              // Adds to filtered array if user has correct equipment.
+              if (data.equipment.join("") === item.toLowerCase()) {
+                filtered.push(data);
+              };
+            });
+          });
+          // Adds bodyweight workouts after filtering by available equipment.
+          res.data.forEach(data => {
+            if (data.equipment.join("") === "") {
+              filtered.push(data);
+            };
+          });
+          console.log("FILTERED", filtered);
+        } else {
+          console.log("SELECTING BODYWEIGHT WORKOUTS");
+          let filtered = [];
+          res.data.forEach(data => {
+            if (data.equipment.join("") === "") {
+              filtered.push(data);
+            };
+          });
+          console.log("FILTERED", filtered);
+        };
+      });
   };
 
   return(
@@ -121,10 +131,12 @@ function GoalsForm() {
           <h4>What equipment do you have available?</h4>
         </div>
         <div className="buttons-section">
-          <button data-type="equipment" onClick={updateState} className="equipbtn">Barbells</button>
-          <button data-type="equipment" onClick={updateState} className="equipbtn">Dumbbells</button>
-          <button data-type="equipment" onClick={updateState} className="equipbtn">Medicine Ball</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Barbell</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Dumbbell</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Exercise Ball</button>
           <button data-type="equipment" onClick={updateState} className="equipbtn">Curl Bar</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Machine</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Bicycle</button>
         </div>
         <div className="buttons-section">
           <button className="btn btn-primary" onClick={handleFormSubmit}>
@@ -135,6 +147,5 @@ function GoalsForm() {
     </div>
   )
 }
-
 
 export default GoalsForm;
