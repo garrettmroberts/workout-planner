@@ -11,3 +11,6 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+.container {
+  margin-block-start: 0px;
+}

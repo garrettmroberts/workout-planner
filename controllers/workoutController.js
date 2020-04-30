@@ -3,8 +3,12 @@ const db = require("../models");
 module.exports = {
   // Find all workouts
   findAll: function(req, res) {
-    db.Workout.find(req.query)
-      .then(dbModel => res.json(dbModel))
+    console.log('HIT FIND ALL');
+    db.Workout.find()
+      .then(dbModel => {
+        console.log('DBMODEL: ', dbModel);
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
 

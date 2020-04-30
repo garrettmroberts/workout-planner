@@ -1,0 +1,16 @@
+button {
+  max-width: 85px;
+}
+.navbar {
+  background-color: rgb(227, 254, 239);
+}
+.nav-btns{
+  text-align: right;
+}
+.right-btn{
+  position: relative;
+  margin-right: 10px;
+}
+.form-inline{
+  justify-content: flex-end;
+}

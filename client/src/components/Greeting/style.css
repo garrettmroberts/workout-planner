@@ -1,0 +1,11 @@
+.container {
+  align-content: center;
+  opacity: 1;
+}
+
+h1, p {
+ text-align: center; 
+}
+.jumbotron{
+  opacity: 0.6;
+}

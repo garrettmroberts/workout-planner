@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // Enables passport verification
-app.use(session({ secret: 'apple butter', resave: true, saveUninitialize: true }));
+app.use(session({ secret: 'apple butter', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 

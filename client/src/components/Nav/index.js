@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useStoreContext } from "../../utils/GlobalState";
 import API from '../../utils/API';
+import './style.css';
 
 function Nav() {
 
@@ -15,31 +16,49 @@ function Nav() {
     }).catch(err => console.log(err));
   }
 
-  if (store.isLoggedIn) {
-    return(
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
-          Workout Tracker
-        </Link>
-        <Link className='nav-link' to='/user'>User</Link>
-        <Link className='nav-link' to='/calendar'>Calendar</Link>
-        <Link className='nav-link' to='/create'>Create</Link>
-        <Link className='nav-link' to='/recent'>Recent</Link>
-        <Link className='nav-link' to='/search'>Search</Link>
-        <button className='btn btn-warning' onClick={logOut}>Logout</button>
-      </nav>
-    );
-  } else {
-    return(
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
-          Workout Tracker
-        </Link>
-        <Link className='nav-link' to='/signUp'>Sign Up</Link>
-        <Link className='nav-link' to='/signIn'>Sign In</Link>
-      </nav>
-    )
-  }
-}
+  const signUp =  (e) => {
+    e.preventDefault()
+    dispatch({ type: 'showsignup' });
+  };
+  const logIn = (e) => {
+    e.preventDefault()
+    dispatch({type: 'showlogin'});
+  };
+
+  const setRender = () => {
+    if (store.isLoggedIn) {
+      return(
+        <nav className="navbar navbar-expand-lg navbar-light">
+          <Link className="navbar-brand" to="/">
+            Workout Tracker
+          </Link>
+          <Link className='nav-link' to='/user'>User</Link>
+          <Link className='nav-link' to='/calendar'>Calendar</Link>
+          <Link className='nav-link' to='/create'>Create</Link>
+          <Link className='nav-link' to='/recent'>Recent</Link>
+          <Link className='nav-link' to='/search'>Search</Link>
+          <button className='btn btn-warning' onClick={logOut}>Logout</button>
+        </nav>
+      );
+    } else {
+      return(
+        <nav className="navbar navbar-expand-lg navbar-light">
+          <Link className="navbar-brand" to="/"> Workout Tracker </Link>
+          <form className='form-inline'>
+            <button className='btn btn-info left-btn' onClick={signUp}>Sign Up</button>
+            <button className='btn btn-info right-btn' onClick={logIn}>Log In</button>
+          </form>
+        </nav>
+      )
+    }
+  };
+
+  return (
+    <div>
+      {setRender()}
+    </div>
+  );
+  
+};
 
 export default Nav;

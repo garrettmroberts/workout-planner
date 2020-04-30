@@ -32,8 +32,14 @@ export default function LoginForm() {
   };
   return (
     <form className="form-group mt-5 mb-5" onSubmit={handleSubmit}>
+      <div className='row'>
+        <div className='col'>
         <input className="form-control mb-5" ref={userRef} placeholder="Email" />
+        </div>
+        <div className = 'col'>
         <input className="form-control mb-5" required ref={pwRef} placeholder="password" />
+        </div>
+      </div>
         <button className="btn btn-success mt-3 mb-5" type="submit">Sign In</button>
     </form>
   );

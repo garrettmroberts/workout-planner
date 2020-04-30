@@ -1,8 +1,6 @@
 import React, { useRef } from 'react';
 import API from '../../utils/API';
 
-
-//basic sign up form that only console logs information at the moment
 function SignUpForm(){
 
   //list of references to differentiate inputs
@@ -12,7 +10,6 @@ function SignUpForm(){
   const pwRef1 = useRef();
   const pwRef2 = useRef();
 
-  //just console logging inputs for now
   //read two passwords so we can make sure they are the same
   const handleSubmit = e => {
     e.preventDefault();
@@ -30,7 +27,6 @@ function SignUpForm(){
       };
 
       //adds user to the database
-      // DOES NOT USE PASSPORT
       API.addUser(newUser)
       .then(res => console.log('res.data ', res.data))
       .catch(err => console.log(err));
@@ -80,12 +76,24 @@ function SignUpForm(){
 
   return (
     <form className="form-group mt-5 mb-5" onSubmit={handleSubmit}>
+      <div className='row'>
+        <div className = 'col'>
+          <input className="form-control mb-5" ref={firstRef} placeholder="First name" />
+        </div>
+        <div className ='col'>
+          <input className="form-control mb-5" ref={lastRef} placeholder="Last name" />
+        </div>
+      </div>
       <input className="form-control mb-5" required ref={emailRef} placeholder="Email" />
-      <input className="form-control mb-5" ref={firstRef} placeholder="First name" />
-      <input className="form-control mb-5" ref={lastRef} placeholder="Last name" />
       {/* TODO: change password fields to hidden text */}
-      <input className="form-control mb-5" required ref={pwRef1} placeholder="password" />
-      <input className="form-control mb-5" required ref={pwRef2} placeholder="re enter password" />
+      <div className='row'>
+          <div className = 'col'>
+            <input className="form-control mb-5" required ref={pwRef1} placeholder="password" />
+          </div>
+          <div className ='col'>
+            <input className="form-control mb-5" required ref={pwRef2} placeholder="re enter password" />
+          </div>
+        </div>
       <button className="btn btn-success mt-3 mb-5" type="submit">Make User</button>
     </form>
   );

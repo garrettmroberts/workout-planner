@@ -26,16 +26,14 @@ router
     .route('/logout')
     .post((req,res)=> {
       req.logout();
-      res.json({message: 'you logged out'});
+      res.redirect('/');
     })
 
 //route to check users login status
 router
     .route('/getloggedinuser')
     .post((req,res)=>{
-      console.log('in the route');
       if(req.user){
-        console.log('REQ.USER', req.user);
         return res.json(req.user);
       }
       return res.json(null);
