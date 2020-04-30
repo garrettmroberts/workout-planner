@@ -29,7 +29,11 @@ module.exports = {
 
   // Find workout by available equipment
   findByEquipment: function(req, res) {
-    db.Workout.find({equipment: req.params.equipment})
+    db.Workout.find({equipment: 
+      {
+        '$regex': req.params.equipment,
+        '$options': 'i'
+      }})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

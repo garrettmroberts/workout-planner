@@ -32,9 +32,10 @@ function Search(){
   
   const handleChange = (e) => {
     clearTimeout(timeoutID); //clear timeout if input changes
+    
     const { name, value } = e.target;
-
-    console.log('name ', name, value);
+    let reggie = new RegExp(value, 'i');
+    console.log('reggie ', reggie);
     
     debouncedSearch(name, value, 700); //send API search after 700 ms
   }
