@@ -23,7 +23,9 @@ function Home() {
     if(user){
       return (
         <div className='wrapper'>
-          <CurrentUser />
+          <div className='container'>
+            <CurrentUser />
+          </div>
         </div>
       )
     } else {

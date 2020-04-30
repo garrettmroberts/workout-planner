@@ -28,17 +28,23 @@ function CurrentUser (){
 
   const getRender = () => {
     return (
-      <div>
-        <div className="card mb-3">
-          <div className="card-body">
-            <h5 className="card-title">My Equipment</h5>
-              {listItems(user.equipment, 'Equipment')}
+      <div className ='container'>
+        <div className='row'>
+          <div className='col'>
+            <div className="card mb-3">
+              <div className="card-body">
+                <h5 className="card-title">My Equipment</h5>
+                  {listItems(user.equipment, 'Equipment')}
+                </div>
             </div>
-        </div>
-        <div className="card mb-3">
-          <div className="card-body">
-            <h5 className="card-title">My Goals</h5>
-            {listItems(user.goals, 'Goals')}
+          </div>
+          <div className='col'>
+            <div className="card mb-3">
+              <div className="card-body">
+                <h5 className="card-title">My Goals</h5>
+                {listItems(user.goals, 'Goals')}
+              </div>
+            </div>
           </div>
         </div>
         <div className="card mb-3">
@@ -59,6 +65,12 @@ function CurrentUser (){
         </div>
       </div>
       {getRender()}
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
     </div>
   );
 };

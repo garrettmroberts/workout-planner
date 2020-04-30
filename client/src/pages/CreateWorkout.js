@@ -15,7 +15,7 @@ function CreateWorkout(){
   },[]);
 
   return(
-    <div>
+    <div className ='wrapper'>
       <h1>Create Workout</h1>
       <WorkoutForm />
     </div>
