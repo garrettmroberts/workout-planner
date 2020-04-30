@@ -24,7 +24,6 @@ function Search(){
   const getAllWorkouts = () => {
     API.getWorkouts()
     .then(res => {
-      console.log('Res.data from getall ', res.data)
       dispatch({type: 'setworkouts', payload: res.data})
     })
     .catch(err => console.log(err));
@@ -74,19 +73,22 @@ function Search(){
     }, interval);
   };
 
+  const styles = {
+    margin: '5'
+  }
   const renderWorkouts = () => {
     if(state.workoutsToRender){
       return(
         <div className='row'>
           {state.workoutsToRender.map(wo => 
-            <div key={wo._id}className="card border-dark mb-3, col-4">
+            <div key={wo._id}className="card border-dark mb-3, col-4" style={styles}>
               <div className="card-header">{wo.name}</div>
               <div className="card-body text-dark">
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">Category: {wo.category}</li>
-                <li className="list-group-item">Muscles: {wo.muscleGroup}</li>
-                <li className="list-group-item">Equipment: {wo.equipment}</li>
-              </ul>
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">Category: {wo.category}</li>
+                  <li className="list-group-item">Muscles: {wo.muscleGroup}</li>
+                  <li className="list-group-item">Equipment: {wo.equipment}</li>
+                </ul>
               </div>
             </div>
           )}
@@ -100,11 +102,11 @@ function Search(){
       <form>
         <div className='row'>
           <div className = 'col'>
-          <label>Search by equipment</label>
+            <label>Search by equipment</label>
             <input type='text' id='equip' onChange={handleChange} name='equipment-search'/>
           </div>
           <div className = 'col'>
-          <label>Search by muscle group</label>
+            <label>Search by muscle group</label>
             <input type='text' onChange={handleChange} name='muscle-search'/>
           </div>
           <div className = 'col'>
