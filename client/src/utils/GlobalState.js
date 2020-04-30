@@ -28,6 +28,11 @@ const reducer = (state, action) => {
         test: action.test,
         isLoggedIn: true
       }
+    case 'setworkouts':
+      return {
+        ...state,
+        workoutsToRender: action.payload
+      }
     case 'logout':
       return{
         ...state,
