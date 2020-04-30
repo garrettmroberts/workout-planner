@@ -5,7 +5,7 @@ const { Provider } = StoreContext;
 
 //function to pass to useReducer()
 const reducer = (state, action) => {
-// TODO: insert switch cases here 
+
   switch (action.type){
     case 'login':
       return {

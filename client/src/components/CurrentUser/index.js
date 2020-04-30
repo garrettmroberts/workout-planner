@@ -9,21 +9,21 @@ function CurrentUser (){
 
   const listItems= (itemArray, itemName) => {
     if(itemArray !== user.goals){
-    if (itemArray.length > 0){
-      return (
-        <div>
-        {itemArray.map((e,i) => (
-          <li key={i}>
-            {e}
-          </li>
-        ))}
-        </div>
-      );
-    } else {
-      return (
-        <p>No {itemName} Added</p>
-      );
-    }
+      if (itemArray.length > 0){
+        return (
+          <div>
+          {itemArray.map((e,i) => (
+            <li className='list-group-item' key={i}>
+              {e}
+            </li>
+          ))}
+          </div>
+        );
+      } else {
+        return (
+          <p>No {itemName} Added</p>
+        );
+      }
   }
   };
 
@@ -33,27 +33,33 @@ function CurrentUser (){
       <div className ='container'>
         <div className='row'>
           <div className='col'>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-title">My Equipment</h5>
-                  {listItems(user.equipment, 'Equipment')}
+            <div className="card border-dark mb-3">
+              <div className="card-header">My Equipment</div>
+                <div className="card-body text-dark">
+                  <ul className="list-group list-group-flush">
+                    {listItems(user.equipment, 'Equipment')}
+                  </ul>
                 </div>
             </div>
           </div>
           <div className='col'>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-title">My Goals</h5>
-                {listItems(user.goals, 'Goals')}
-              </div>
+            <div className="card border-dark mb-3">
+              <div className="card-header">My Goal</div>
+                <div className="card-body text-dark">
+                  <ul className="list-group list-group-flush">
+                    {user.goal ? user.goal : <p>No goal set yet</p>}
+                  </ul>
+                </div>
             </div>
           </div>
         </div>
-        <div className="card mb-3">
-          <div className="card-body">
-            <h5 className="card-title">My Calendar</h5>
-            {listItems(user.calendar, 'Calendar')}
-          </div>
+        <div className="card border-dark mb-3">
+          <div className="card-header">My Calendar</div>
+            <div className="card-body text-dark">
+              <ul className="list-group list-group-flush">
+                {listItems(user.calendar, 'Calendar')}
+              </ul>
+            </div>
         </div>
       </div>
     );

@@ -36,7 +36,7 @@ function Nav() {
           <Link className='nav-link' to='/create'>Create</Link>
           <Link className='nav-link' to='/recent'>Recent</Link>
           <Link className='nav-link' to='/search'>Search</Link>
-          <button className='btn btn-warning' onClick={logOut}>Logout</button>
+          <button className='nav-btns btn btn-warning' onClick={logOut}>Logout</button>
         </nav>
       );
     } else {
@@ -44,8 +44,8 @@ function Nav() {
         <nav className="navbar navbar-expand-lg navbar-light">
           <Link className="navbar-brand" to="/"> Workout Tracker </Link>
           <form className='form-inline'>
-            <button className='btn btn-info left-btn' onClick={signUp}>Sign Up</button>
-            <button className='btn btn-info right-btn' onClick={logIn}>Log In</button>
+            <button className='nav-btns btn btn-info left-btn' onClick={signUp}>Sign Up</button>
+            <button className='btn nav-btns btn-info right-btn' onClick={logIn}>Log In</button>
           </form>
         </nav>
       )
