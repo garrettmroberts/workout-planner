@@ -28,7 +28,7 @@ function Nav() {
   const setRender = () => {
     if (store.isLoggedIn) {
       return(
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light">
           <Link className="navbar-brand" to="/">
             Workout Tracker
           </Link>
@@ -42,7 +42,7 @@ function Nav() {
       );
     } else {
       return(
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light">
           <Link className="navbar-brand" to="/"> Workout Tracker </Link>
           <form className='form-inline'>
             <button className='btn btn-info left-btn' onClick={signUp}>Sign Up</button>

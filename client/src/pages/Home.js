@@ -22,11 +22,13 @@ function Home() {
     let user = state.currentUser;
     if(user){
       return (
-      <CurrentUser />
+        <div className='wrapper'>
+          <CurrentUser />
+        </div>
       )
     } else {
       return (
-        <div>
+        <div className='wrapper'>
           <Greeting />
           {state.showSignUp ? <SignUpForm /> : <p></p> }
           {state.showLogIn ? <LoginForm /> : <p></p> }
