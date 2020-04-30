@@ -65,12 +65,6 @@ function CurrentUser (){
         </div>
       </div>
       {getRender()}
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
     </div>
   );
 };

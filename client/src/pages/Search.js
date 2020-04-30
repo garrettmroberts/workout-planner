@@ -23,7 +23,10 @@ function Search(){
 
   const getAllWorkouts = () => {
     API.getWorkouts()
-    .then(res => console.log('Res.data from getall ', res.data))
+    .then(res => {
+      console.log('Res.data from getall ', res.data)
+      dispatch({type: 'setworkouts', payload: res.data})
+    })
     .catch(err => console.log(err));
   };
   
@@ -74,15 +77,15 @@ function Search(){
   const renderWorkouts = () => {
     if(state.workoutsToRender){
       return(
-        <div>
+        <div className='row'>
           {state.workoutsToRender.map(wo => 
-            <div key={wo._id}className="card border-dark mb-3">
-              <div className="card-header">{wo.name}r</div>
+            <div key={wo._id}className="card border-dark mb-3, col-4">
+              <div className="card-header">{wo.name}</div>
               <div className="card-body text-dark">
               <ul className="list-group list-group-flush">
-                <li className="list-group-item">{wo.category}</li>
-                <li className="list-group-item">{wo.muscleGroup}</li>
-                <li className="list-group-item">{wo.equipment}</li>
+                <li className="list-group-item">Category: {wo.category}</li>
+                <li className="list-group-item">Muscles: {wo.muscleGroup}</li>
+                <li className="list-group-item">Equipment: {wo.equipment}</li>
               </ul>
               </div>
             </div>
@@ -95,12 +98,20 @@ function Search(){
   return(
     <div className='wrapper'>
       <form>
-        <p>Search by equipment</p>
-        <input type='text' onChange={handleChange} name='equipment-search'/>
-        <p>Search by muscle group</p>
-        <input type='text' onChange={handleChange} name='muscle-search'/>
-        <p>Search by category</p>
-        <input type='text' onChange={handleChange} name='category-search'/>
+        <div className='row'>
+          <div className = 'col'>
+          <label for='equip'>Search by equipment</label>
+            <input type='text' id='equip' onChange={handleChange} name='equipment-search'/>
+          </div>
+          <div className = 'col'>
+          <label for='muscle'>Search by muscle group</label>
+            <input type='text' id='muscle' onChange={handleChange} name='muscle-search'/>
+          </div>
+          <div className = 'col'>
+            <label for='category'>Search by category</label>
+            <input type='text' id='categpry' onChange={handleChange}  name='category-search'/>
+          </div>
+        </div>
       </form>
       {renderWorkouts()}
     </div>
