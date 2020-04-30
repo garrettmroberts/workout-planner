@@ -8,6 +8,7 @@ function CurrentUser (){
   const user = state.currentUser;
 
   const listItems= (itemArray, itemName) => {
+    if(itemArray !== user.goals){
     if (itemArray.length > 0){
       return (
         <div>
@@ -23,6 +24,7 @@ function CurrentUser (){
         <p>No {itemName} Added</p>
       );
     }
+  }
   };
 
 

@@ -32,7 +32,6 @@ function Nav() {
           <Link className="navbar-brand" to="/">
             Workout Tracker
           </Link>
-          <Link className='nav-link' to='/user'>User</Link>
           <Link className='nav-link' to='/calendar'>Calendar</Link>
           <Link className='nav-link' to='/create'>Create</Link>
           <Link className='nav-link' to='/recent'>Recent</Link>

@@ -100,16 +100,16 @@ function Search(){
       <form>
         <div className='row'>
           <div className = 'col'>
-          <label for='equip'>Search by equipment</label>
+          <label>Search by equipment</label>
             <input type='text' id='equip' onChange={handleChange} name='equipment-search'/>
           </div>
           <div className = 'col'>
-          <label for='muscle'>Search by muscle group</label>
-            <input type='text' id='muscle' onChange={handleChange} name='muscle-search'/>
+          <label>Search by muscle group</label>
+            <input type='text' onChange={handleChange} name='muscle-search'/>
           </div>
           <div className = 'col'>
-            <label for='category'>Search by category</label>
-            <input type='text' id='categpry' onChange={handleChange}  name='category-search'/>
+            <label>Search by category</label>
+            <input type='text'  onChange={handleChange}  name='category-search'/>
           </div>
         </div>
       </form>
