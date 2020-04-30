@@ -8,7 +8,6 @@ function CurrentUser (){
   const user = state.currentUser;
 
   const listItems= (itemArray, itemName) => {
-    if (2 === 3) {
 
       if(itemArray !== user.goals){
         if (itemArray.length > 0){
@@ -27,10 +26,37 @@ function CurrentUser (){
           );
         }
     }
-    }
+    
   };
 
-
+  const setCalendar = () => {
+    console.log(user.calendar);
+    if(user.calendar.length > 0){
+      return (
+        <div className="card cal-card border-dark mb-3">
+          <div className="card-header">Up next on my calendar:{' '} {user.calendar[0].day}</div>
+          <div className="card-body text-dark">
+            <ul className="list-group list-group-flush">
+              {user.calendar[0].workouts.map((wo , i) => (
+                <li className='list-group-item' key={i}>
+                  <p>exercise: {' ', wo.name}</p>
+                  <p>sets: {' ', wo.sets}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="card cal-card border-dark mb-3">
+          <div className="card-header">No calendar made yet</div>
+          <div className='card-body text-dark'>
+          </div>
+        </div>
+      )
+    }
+  }
   const getRender = () => {
     return (
       <div className ='container'>
@@ -56,14 +82,7 @@ function CurrentUser (){
             </div>
           </div>
         </div>
-        <div className="card cal-card border-dark mb-3">
-          <div className="card-header">My Calendar</div>
-            <div className="card-body text-dark">
-              <ul className="list-group list-group-flush">
-                {listItems(user.calendar, 'Calendar')}
-              </ul>
-            </div>
-        </div>
+        {setCalendar()}
       </div>
     );
   };

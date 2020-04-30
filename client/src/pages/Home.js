@@ -22,12 +22,8 @@ function Home() {
     let user = state.currentUser;
     if(user){
       return (
-        <div className='wrapper'>
-          <div className='container'>
-            <CurrentUser />
-          </div>
-        </div>
-      )
+        <CurrentUser />
+      );
     } else {
       return (
         <div className='wrapper'>
@@ -40,7 +36,7 @@ function Home() {
   };
 
   return(
-    <div>
+    <div className='wrapper'>
       {getStuffToRender()}
     </div>
   );
