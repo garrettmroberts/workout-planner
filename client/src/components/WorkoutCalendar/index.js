@@ -9,7 +9,7 @@ function WorkoutCalendar() {
   console.log(state.currentUser.calendar);
   const workoutCards = state.currentUser.calendar.map(({ day, workouts }) => {
     return <Card day={day} key={day} workouts={workouts}/>
-  })
+  });
 
   return(
     <div className="card-holder">

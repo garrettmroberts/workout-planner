@@ -79,10 +79,15 @@ function Search(){
   }
   const renderWorkouts = () => {
     if(state.workoutsToRender){
+
+      const workoutStyles = {
+        justifyContent: 'space-evenly'
+      }
+      
       return(
-        <div className='row'>
-          {state.workoutsToRender.map(wo => 
-            <div key={wo._id}className="card border-dark mb-3, col-4" style={styles}>
+        <div className='row' style={workoutStyles}>
+          {state.workoutsToRender.map((wo,i) => 
+            <div key={wo._id}className="card border-dark mb-3 col-3" style={styles}>
               <div className="card-header">{wo.name}</div>
               <div className="card-body text-dark">
                 <ul className="list-group list-group-flush">
