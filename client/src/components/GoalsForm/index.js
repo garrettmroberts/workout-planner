@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import API from "../../utils/API";
-import { useStoreContext } from "../../utils/GlobalState"; 
+import { useStoreContext } from "../../utils/GlobalState";
 import "./style.css";
 
 function GoalsForm() {
@@ -8,7 +8,7 @@ function GoalsForm() {
     goal: "",
     equipment: []
   });
-  
+
   const [state, dispatch] = useStoreContext();
 
   function updateState(event) {
@@ -22,7 +22,7 @@ function GoalsForm() {
     // Updates Goal
     if (type === "goal") {
       // Updates goal state
-      setFormState({...formState, [type]: value});
+      setFormState({ ...formState, [type]: value });
 
       // Clears "active class from goals section"
       const buttons = document.querySelectorAll(".goalsbtn");
@@ -32,15 +32,15 @@ function GoalsForm() {
 
       // Makes event target active
       event.target.classList.add("active");
-      
-    // Updates equipment
+
+      // Updates equipment
     } else {
       // Toggles active class
       event.target.classList.toggle("active");
 
       // Adds value to equipment state if recently made active
-      if (event.target.classList.contains("active")){
-        setFormState({...formState, [type]: [...formState.equipment, value]}); 
+      if (event.target.classList.contains("active")) {
+        setFormState({ ...formState, [type]: [...formState.equipment, value] });
       } else {
         // Here we remove from array if made inactive
         const idx = formState.equipment.indexOf(value);
@@ -48,7 +48,7 @@ function GoalsForm() {
         // A copy of equipment is created, spliced, and placed into equipment
         let newArr = formState.equipment
         formState.equipment.splice(idx, 1);
-        setFormState({...formState, [type]: newArr});
+        setFormState({ ...formState, [type]: newArr });
       }
     };
   };
@@ -57,18 +57,18 @@ function GoalsForm() {
     // Prevents event default
     event.preventDefault();
 
-    
+
     // Clears form
     const buttons = document.querySelectorAll("button");
     buttons.forEach(button => {
       button.classList.remove("active");
     });
-    
+
     // Updates the active user's data in global state
     let updatedUser = state.currentUser;
     updatedUser.goal = formState.goal;
     updatedUser.equipment = formState.equipment;
-    dispatch({type: 'updateUser', payload: updatedUser });
+    dispatch({ type: 'updateUser', payload: updatedUser });
 
     // Updates active user's info in DB
     const id = state.currentUser._id;
@@ -100,21 +100,83 @@ function GoalsForm() {
               filtered.push(data);
             };
           });
-          console.log("FILTERED", filtered);
+          // If no equipment selected, only bodyeight exercises are added
         } else {
-          console.log("SELECTING BODYWEIGHT WORKOUTS");
-          let filtered = [];
           res.data.forEach(data => {
             if (data.equipment.join("") === "") {
               filtered.push(data);
             };
           });
-          console.log("FILTERED", filtered);
         };
+
+        collectExerciseDays(filtered);
+
+        // Begins to generate calendar based upon user goals
+        // if (state.currentUser.goal === "Bulk up") {
+        //   createBulkCalendar(filtered);
+        // } else {
+        //   createCutCalendar(filtered);
+        // };
       });
   };
 
-  return(
+  const collectExerciseDays = exercises => {
+    // Creates array of muscle groups to hit
+    let muscleGroups = [];
+    exercises.forEach(exercise => {
+      muscleGroups.push(exercise.muscleGroup.join(""));
+    });
+
+    // Removes redundant muscles
+    const uniqueMuscleGroups = muscleGroups.filter((muscle, index, self) => {
+      return index === self.indexOf(muscle);
+    })
+
+    // Sorts muscle groups available into different arrays
+    let chestAndTricepsMuscles = [];
+    let legMuscles = [];
+    let backAndBicepMuscles = [];
+    let cardio = [];
+    uniqueMuscleGroups.forEach((muscle) => {
+      if (muscle === "chest" || muscle === "triceps" || muscle === "shoulders" || muscle === "forearms") {
+        chestAndTricepsMuscles.push(muscle);
+      } else if (muscle === "hamstrings" || muscle === "quadriceps" || muscle === "calves") {
+        legMuscles.push(muscle);
+      } else if (muscle === "lats" || muscle === "biceps" || muscle === "middle back" || muscle === "traps" || muscle === "lower back") {
+        backAndBicepMuscles.push(muscle)
+      } else {
+        cardio.push(muscle);
+      };
+    });
+
+    let chestExercises = [];
+    let legExercises = [];
+    let backExerises = [];
+    let cardioExercises = [];
+    exercises.forEach((exercise) => {
+      if (chestAndTricepsMuscles.includes(exercise.muscleGroup.join(""))) {
+        chestExercises.push(exercise);
+      } else if (legMuscles.includes(exercise.muscleGroup.join(""))) {
+        legExercises.push(exercise);
+      } else if (backAndBicepMuscles.includes(exercise.muscleGroup.join(""))) {
+        backExerises.push(exercise);
+      } else {
+        cardioExercises.push(exercise);
+      }
+    })
+
+    let sortedExercises = {
+      chestAndBiceps: chestExercises,
+      legs: legExercises,
+      backAndBiceps: backExerises,
+      cardio: cardioExercises
+    };
+
+    console.log(sortedExercises);
+    return sortedExercises;
+  };
+
+  return (
     <div id="content-container">
       <form>
         <div className="form-header">
