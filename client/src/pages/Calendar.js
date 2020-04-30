@@ -7,9 +7,17 @@ import API from '../utils/API';
 import "./calendar.css";
 
 function Calendar() {
-  const [store] = useStoreContext();
+  const [store, dispatch] = useStoreContext();
+
+  useEffect(()=> {
+    API.getLoggedInUser().then(res =>{
+      const user = res.data;
+      if(res.data) { dispatch({ type: 'setuser',user: user});}
+    }).catch(err=> console.log(err));
+  },[]);
 
   const renderComponents = () => {
+    //send user to homepage if they are not logged in
     if(!store.currentUser){
       return(
         <Redirect to='/'/>

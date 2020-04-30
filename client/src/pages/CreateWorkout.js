@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import WorkoutForm from '../components/WorkoutForm';
 import { useStoreContext } from '../utils/GlobalState'
 import API from '../utils/API';
+import { Store } from 'express-session';
 
 function CreateWorkout(){
-  const [, dispatch] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
 
   //get user data from api and store to global context
   useEffect(()=>{
@@ -13,12 +15,23 @@ function CreateWorkout(){
       if(res.data) { dispatch({ type: 'setuser',user: user});}
     }).catch(err=> console.log(err));
   },[]);
-
+  
+  const render = () => {
+    if(!state.currentUser){
+      return(
+        <Redirect to='/'/>
+      )
+    }
   return(
     <div className ='wrapper'>
       <h1>Create Workout</h1>
       <WorkoutForm />
     </div>
-  )
+  );
+  };
+  return(
+    <div>{render()}</div>
+  );
+  
 };
 export default CreateWorkout;

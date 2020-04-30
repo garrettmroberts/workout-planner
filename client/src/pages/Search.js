@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useStoreContext } from '../utils/GlobalState'
+import { Redirect } from 'react-router-dom';
+import { useStoreContext } from '../utils/GlobalState';
 import API from '../utils/API';
 
 function Search(){
@@ -74,7 +75,7 @@ function Search(){
   };
 
   const styles = {
-    margin: '5'
+    maxwidth: ''
   }
   const renderWorkouts = () => {
     if(state.workoutsToRender){
@@ -97,24 +98,35 @@ function Search(){
     }
   };
 
+  const renderPage = () =>{
+    if(!state.currentUser){
+      return(
+        <Redirect to='/'/>
+      );
+    }
+    return(
+      <form>
+          <div className='row'>
+            <div className = 'col'>
+              <label>Search by equipment</label>
+              <input type='text' id='equip' onChange={handleChange} name='equipment-search'/>
+            </div>
+            <div className = 'col'>
+              <label>Search by muscle group</label>
+              <input type='text' onChange={handleChange} name='muscle-search'/>
+            </div>
+            <div className = 'col'>
+              <label>Search by category</label>
+              <input type='text'  onChange={handleChange}  name='category-search'/>
+            </div>
+          </div>
+        </form>
+    );
+  };
+
   return(
     <div className='wrapper'>
-      <form>
-        <div className='row'>
-          <div className = 'col'>
-            <label>Search by equipment</label>
-            <input type='text' id='equip' onChange={handleChange} name='equipment-search'/>
-          </div>
-          <div className = 'col'>
-            <label>Search by muscle group</label>
-            <input type='text' onChange={handleChange} name='muscle-search'/>
-          </div>
-          <div className = 'col'>
-            <label>Search by category</label>
-            <input type='text'  onChange={handleChange}  name='category-search'/>
-          </div>
-        </div>
-      </form>
+      {renderPage()}
       {renderWorkouts()}
     </div>
   )
