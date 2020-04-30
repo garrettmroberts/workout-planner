@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import API from "../../utils/API";
-import { useStoreContext } from "../../utils/GlobalState"; 
+import { useStoreContext } from "../../utils/GlobalState";
 import "./style.css";
 
 function GoalsForm() {
@@ -9,7 +9,7 @@ function GoalsForm() {
     equipment: []
   });
 
-  const [store] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
 
   function updateState(event) {
     // Prevents deafult
@@ -22,7 +22,7 @@ function GoalsForm() {
     // Updates Goal
     if (type === "goal") {
       // Updates goal state
-      setFormState({...formState, [type]: value});
+      setFormState({ ...formState, [type]: value });
 
       // Clears "active class from goals section"
       const buttons = document.querySelectorAll(".goalsbtn");
@@ -32,15 +32,15 @@ function GoalsForm() {
 
       // Makes event target active
       event.target.classList.add("active");
-      
-    // Updates equipment
+
+      // Updates equipment
     } else {
       // Toggles active class
       event.target.classList.toggle("active");
 
       // Adds value to equipment state if recently made active
-      if (event.target.classList.contains("active")){
-        setFormState({...formState, [type]: [...formState.equipment, value]}); 
+      if (event.target.classList.contains("active")) {
+        setFormState({ ...formState, [type]: [...formState.equipment, value] });
       } else {
         // Here we remove from array if made inactive
         const idx = formState.equipment.indexOf(value);
@@ -48,7 +48,7 @@ function GoalsForm() {
         // A copy of equipment is created, spliced, and placed into equipment
         let newArr = formState.equipment
         formState.equipment.splice(idx, 1);
-        setFormState({...formState, [type]: newArr});
+        setFormState({ ...formState, [type]: newArr });
       }
     };
   };
@@ -57,48 +57,126 @@ function GoalsForm() {
     // Prevents event default
     event.preventDefault();
 
-    
+
     // Clears form
     const buttons = document.querySelectorAll("button");
     buttons.forEach(button => {
       button.classList.remove("active");
     });
-    
+
     // Updates the active user's data in global state
-    store.currentUser.goal = formState.goal;
-    store.currentUser.equipment = formState.equipment;
+    let updatedUser = state.currentUser;
+    updatedUser.goal = formState.goal;
+    updatedUser.equipment = formState.equipment;
+    dispatch({ type: 'updateUser', payload: updatedUser });
 
     // Updates active user's info in DB
-    const id = store.currentUser._id;
+    const id = state.currentUser._id;
     const userData = formState;
     API.updateUser(userData, id);
 
-    // Generates a workout based on user choice
-    if (store.currentUser.goal === "Bulk up") {
-      generateBulkWorkout();
-    } else {
-      generateCutWorkout();
+    // Generates a workout
+    buildCalendar();
+  };
+
+  const buildCalendar = () => {
+    API.getWorkouts()
+      // res.data gets all workouts
+      .then(res => {
+        // Filters exercises to ones included in user's available equipment
+        let filtered = [];
+        if (state.currentUser.equipment.length > 0) {
+          state.currentUser.equipment.forEach(item => {
+            res.data.forEach(data => {
+              // Adds to filtered array if user has correct equipment.
+              if (data.equipment.join("") === item.toLowerCase()) {
+                filtered.push(data);
+              };
+            });
+          });
+          // Adds bodyweight workouts after filtering by available equipment.
+          res.data.forEach(data => {
+            if (data.equipment.join("") === "") {
+              filtered.push(data);
+            };
+          });
+          // If no equipment selected, only bodyeight exercises are added
+        } else {
+          res.data.forEach(data => {
+            if (data.equipment.join("") === "") {
+              filtered.push(data);
+            };
+          });
+        };
+
+        collectExerciseDays(filtered);
+
+        // Begins to generate calendar based upon user goals
+        // if (state.currentUser.goal === "Bulk up") {
+        //   createBulkCalendar(filtered);
+        // } else {
+        //   createCutCalendar(filtered);
+        // };
+      });
+  };
+
+  const collectExerciseDays = exercises => {
+    // Creates array of muscle groups to hit
+    let muscleGroups = [];
+    exercises.forEach(exercise => {
+      muscleGroups.push(exercise.muscleGroup.join(""));
+    });
+
+    // Removes redundant muscles
+    const uniqueMuscleGroups = muscleGroups.filter((muscle, index, self) => {
+      return index === self.indexOf(muscle);
+    })
+
+    // Sorts muscle groups available into different arrays
+    let chestAndTricepsMuscles = [];
+    let legMuscles = [];
+    let backAndBicepMuscles = [];
+    let cardio = [];
+    uniqueMuscleGroups.forEach((muscle) => {
+      if (muscle === "chest" || muscle === "triceps" || muscle === "shoulders" || muscle === "forearms") {
+        chestAndTricepsMuscles.push(muscle);
+      } else if (muscle === "hamstrings" || muscle === "quadriceps" || muscle === "calves") {
+        legMuscles.push(muscle);
+      } else if (muscle === "lats" || muscle === "biceps" || muscle === "middle back" || muscle === "traps" || muscle === "lower back") {
+        backAndBicepMuscles.push(muscle)
+      } else {
+        cardio.push(muscle);
+      };
+    });
+
+    let chestExercises = [];
+    let legExercises = [];
+    let backExerises = [];
+    let cardioExercises = [];
+    exercises.forEach((exercise) => {
+      if (chestAndTricepsMuscles.includes(exercise.muscleGroup.join(""))) {
+        chestExercises.push(exercise);
+      } else if (legMuscles.includes(exercise.muscleGroup.join(""))) {
+        legExercises.push(exercise);
+      } else if (backAndBicepMuscles.includes(exercise.muscleGroup.join(""))) {
+        backExerises.push(exercise);
+      } else {
+        cardioExercises.push(exercise);
+      }
+    })
+
+    let sortedExercises = {
+      chestAndBiceps: chestExercises,
+      legs: legExercises,
+      backAndBiceps: backExerises,
+      cardio: cardioExercises
     };
 
+    console.log(sortedExercises);
+    return sortedExercises;
   };
 
-  function generateBulkWorkout() {
-    API.getWorkouts()
-      .then(res => {
-        const workouts = res.data;
-        console.log("GENERATING BULK");
-      })
-  };
-
-  function generateCutWorkout() {
-    API.getWorkouts()
-      .then(res => {
-        const workouts = res.data;
-        console.log("GENERATING CUT");
-      })
-  };
-
-  return(
+  return (
     <div id="content-container">
       <form>
         <div className="form-header">
@@ -115,10 +193,12 @@ function GoalsForm() {
           <h4>What equipment do you have available?</h4>
         </div>
         <div className="buttons-section">
-          <button data-type="equipment" onClick={updateState} className="equipbtn">Barbells</button>
-          <button data-type="equipment" onClick={updateState} className="equipbtn">Dumbbells</button>
-          <button data-type="equipment" onClick={updateState} className="equipbtn">Medicine Ball</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Barbell</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Dumbbell</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Exercise Ball</button>
           <button data-type="equipment" onClick={updateState} className="equipbtn">Curl Bar</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Machine</button>
+          <button data-type="equipment" onClick={updateState} className="equipbtn">Bicycle</button>
         </div>
         <div className="buttons-section">
           <button className="btn btn-primary" onClick={handleFormSubmit}>
@@ -129,6 +209,5 @@ function GoalsForm() {
     </div>
   )
 }
-
 
 export default GoalsForm;

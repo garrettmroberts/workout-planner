@@ -26,7 +26,7 @@ router
     .route('/logout')
     .post((req,res)=> {
       req.logout();
-      res.json({message: 'you logged out'});
+      res.redirect('/');
     })
 
 //route to check users login status

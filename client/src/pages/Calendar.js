@@ -7,12 +7,19 @@ import "./calendar.css";
 
 function Calendar() {
   const [store] = useStoreContext();
+
+  const renderComponents = () => {
+    if (store.currentUser.goal) {
+      return <WorkoutCalendar />
+    } else {
+      return <GoalsForm />
+    };
+  };
   
   return(
     <div className="wrapper">
-      <GoalsForm />
-      <WorkoutCalendar />
+      {renderComponents()}
     </div>
-  );
+  )
 };
 export default Calendar;
