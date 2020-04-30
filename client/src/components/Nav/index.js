@@ -16,10 +16,12 @@ function Nav() {
     }).catch(err => console.log(err));
   }
 
-  const signUp =  () => {
+  const signUp =  (e) => {
+    e.preventDefault()
     dispatch({ type: 'showsignup' });
   };
-  const logIn = () => {
+  const logIn = (e) => {
+    e.preventDefault()
     dispatch({type: 'showlogin'});
   };
 
@@ -41,15 +43,11 @@ function Nav() {
     } else {
       return(
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className='row'>
-          <Link className="navbar-brand" to="/">
-            Workout Tracker
-          </Link>
-          <div className='nav-btns'>
+          <Link className="navbar-brand" to="/"> Workout Tracker </Link>
+          <form className='form-inline'>
             <button className='btn btn-info left-btn' onClick={signUp}>Sign Up</button>
             <button className='btn btn-info right-btn' onClick={logIn}>Log In</button>
-          </div>
-          </div>
+          </form>
         </nav>
       )
     }

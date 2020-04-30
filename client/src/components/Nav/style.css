@@ -1,10 +1,17 @@
 button {
-  max-width: 155px;
+  max-width: 85px;
 }
 
-nav {
+.navbar {
   justify-content: space-between;
 }
 .nav-btns{
   text-align: right;
+}
+.right-btn{
+  position: relative;
+  margin-right: 10px;
+}
+.form-inline{
+  justify-content: flex-end;
 }
