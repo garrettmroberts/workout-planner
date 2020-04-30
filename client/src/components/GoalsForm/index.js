@@ -111,14 +111,8 @@ function GoalsForm() {
 
         const exercisesSortedByDate = collectExerciseDays(filtered);
         const userCalendar = buildCalendarDays(exercisesSortedByDate);
-        console.log(userCalendar);
-
-        // Begins to generate calendar based upon user goals
-        // if (state.currentUser.goal === "Bulk up") {
-        //   createBulkCalendar(filtered);
-        // } else {
-        //   createCutCalendar(filtered);
-        // };
+        const finishedCalendar = addReps(userCalendar);
+        console.log(finishedCalendar);
       });
   };
 
@@ -242,11 +236,21 @@ function GoalsForm() {
 
       let possibleExercises = exercisesArray[workoutType];
       let dayExercises = [];
+
+      // Inserts five workouts a day if strength, three if cardio/abs day
       let j = 0;
-      while (j < 5) {
-        let rand = Math.floor(Math.random() * exercisesArray[workoutType].length);
-        dayExercises.push(possibleExercises[rand]);
-        j++;
+      if (workoutType !== 3) {
+        while (j < 5) {
+          let rand = Math.floor(Math.random() * exercisesArray[workoutType].length);
+          dayExercises.push(possibleExercises[rand]);
+          j++;
+        }
+      } else {
+        while (j < 3) {
+          let rand = Math.floor(Math.random() * exercisesArray[workoutType].length);
+          dayExercises.push(possibleExercises[rand]);
+          j++;
+        }
       }
 
       let dayPlan = {
@@ -264,6 +268,38 @@ function GoalsForm() {
     };
 
     return workoutCalendar;
+  };
+
+  const addReps = calendar => {
+    if (state.currentUser.goal === "Bulk up") {
+      calendar.forEach(({ workouts }) => {
+        workouts.forEach(workout => {
+          if (workout.category === "strength") {
+            const sets = Math.floor(Math.random() * (5 - 3) + 3);
+            const reps = Math.floor(Math.random() * (12 - 8) + 8);
+            workout.sets = `${sets} x ${reps}`;
+          } else {
+            const time = Math.floor(Math.random() * (60 - 40) + 40);
+            workout.time = `${time} minutes`;
+          }
+        });
+      });
+    } else {
+      calendar.forEach(({ workouts }) => {
+        workouts.forEach(workout => {
+          if (workout.category === "strength") {
+            const sets = Math.floor(Math.random() * (6 - 4) + 4);
+            const reps = Math.floor(Math.random() * (20 - 15) + 15);
+            workout.sets = `${sets} x ${reps}`;
+          } else {
+            const time = Math.floor(Math.random() * (70 - 50) + 50);
+            workout.time = `${time} minutes`;
+          }
+        });
+      });
+    }
+
+    return calendar;
   };
 
   return (
