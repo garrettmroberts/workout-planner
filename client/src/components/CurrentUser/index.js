@@ -8,23 +8,26 @@ function CurrentUser (){
   const user = state.currentUser;
 
   const listItems= (itemArray, itemName) => {
-    if(itemArray !== user.goals){
-      if (itemArray.length > 0){
-        return (
-          <div>
-          {itemArray.map((e,i) => (
-            <li className='list-group-item' key={i}>
-              {e}
-            </li>
-          ))}
-          </div>
-        );
-      } else {
-        return (
-          <p>No {itemName} Added</p>
-        );
-      }
-  }
+    if (2 === 3) {
+
+      if(itemArray !== user.goals){
+        if (itemArray.length > 0){
+          return (
+            <div>
+            {itemArray.map((e,i) => (
+              <li className='list-group-item' key={i}>
+                {e}
+              </li>
+            ))}
+            </div>
+          );
+        } else {
+          return (
+            <p>No {itemName} Added</p>
+          );
+        }
+    }
+    }
   };
 
 

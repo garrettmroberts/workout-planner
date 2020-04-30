@@ -109,14 +109,19 @@ function GoalsForm() {
           });
         };
 
-        collectExerciseDays(filtered);
+        const exercisesSortedByDate = collectExerciseDays(filtered);
+        const userCalendar = buildCalendarDays(exercisesSortedByDate);
+        const finishedCalendar = addReps(userCalendar);
 
-        // Begins to generate calendar based upon user goals
-        // if (state.currentUser.goal === "Bulk up") {
-        //   createBulkCalendar(filtered);
-        // } else {
-        //   createCutCalendar(filtered);
-        // };
+        
+        // Updates the active user's calendar in global state
+        let updatedUser = state.currentUser;
+        updatedUser.calendar = finishedCalendar;
+        dispatch({ type: 'updateUser', payload: updatedUser });
+
+        // Updates active user's info in DB
+        const id = state.currentUser._id;
+        API.updateUser({calendar: finishedCalendar}, id);
       });
   };
 
@@ -168,12 +173,142 @@ function GoalsForm() {
     let sortedExercises = {
       chestAndBiceps: chestExercises,
       legs: legExercises,
-      backAndBiceps: backExerises,
+      backAndTriceps: backExerises,
       cardio: cardioExercises
     };
 
-    console.log(sortedExercises);
     return sortedExercises;
+  };
+
+  // Helper function for accessing days beyond today
+  Date.prototype.nextDay = function (days) {
+    let date = new Date(this.valueOf());
+    date.setDate(date.getDate() + 2);
+    return date;
+  }
+
+  const buildCalendarDays = exercises => {
+    let workoutCalendar = [];
+
+    let exercisesArray = [
+      exercises.chestAndBiceps, exercises.legs, exercises.backAndTriceps, exercises.cardio
+    ];
+
+    let today = new Date();
+    let i = 0;
+    let workoutType = 0;
+    // Updates day by 2 30 times
+    while (i < 30) {
+
+      // Format the date to an easily readable string
+      let readableDate = "";
+      let monthNum = today.getMonth();
+      switch (monthNum) {
+        case 0:
+          readableDate += "Jan";
+          break;
+        case 1:
+          readableDate += "Feb";
+          break;
+        case 2:
+          readableDate += "Mar";
+          break;
+        case 3:
+          readableDate += "Apr";
+          break;
+        case 4:
+          readableDate += "May";
+          break;
+        case 5:
+          readableDate += "Jun";
+          break;
+        case 6:
+          readableDate += "Jul";
+          break;
+        case 7:
+          readableDate += "Aug";
+          break;
+        case 8:
+          readableDate += "Sept";
+          break;
+        case 9:
+          readableDate += "Oct";
+          break;
+        case 10:
+          readableDate += "Nov";
+          break;
+        case 11:
+          readableDate += "Dec";
+          break;
+      }
+      readableDate += " " + today.getDate();
+
+      let possibleExercises = exercisesArray[workoutType];
+      let dayExercises = [];
+
+      // Inserts five workouts a day if strength, three if cardio/abs day
+      let j = 0;
+      if (workoutType !== 3) {
+        while (j < 5) {
+          let rand = Math.floor(Math.random() * exercisesArray[workoutType].length);
+          dayExercises.push(possibleExercises[rand]);
+          j++;
+        }
+      } else {
+        while (j < 3) {
+          let rand = Math.floor(Math.random() * exercisesArray[workoutType].length);
+          dayExercises.push(possibleExercises[rand]);
+          j++;
+        }
+      }
+
+      let dayPlan = {
+        day: readableDate,
+        workouts: dayExercises
+
+      };
+
+      workoutCalendar.push(dayPlan);
+      // Increments to next day
+      let next = today.nextDay();
+      today = next;
+      workoutType = (workoutType + 1) % exercisesArray.length;
+      i++;
+    };
+
+    return workoutCalendar;
+  };
+
+  const addReps = calendar => {
+    if (state.currentUser.goal === "Bulk up") {
+      calendar.forEach(({ workouts }) => {
+        workouts.forEach(workout => {
+          if (workout.category === "strength") {
+            const sets = Math.floor(Math.random() * (5 - 3) + 3);
+            const reps = Math.floor(Math.random() * (12 - 8) + 8);
+            workout.sets = `${sets} x ${reps}`;
+          } else {
+            const time = Math.floor(Math.random() * (60 - 40) + 40);
+            workout.time = `${time} minutes`;
+          }
+        });
+      });
+    } else {
+      calendar.forEach(({ workouts }) => {
+        workouts.forEach(workout => {
+          if (workout.category === "strength") {
+            const sets = Math.floor(Math.random() * (6 - 4) + 4);
+            const reps = Math.floor(Math.random() * (20 - 15) + 15);
+            workout.sets = `${sets} x ${reps}`;
+          } else {
+            const time = Math.floor(Math.random() * (70 - 50) + 50);
+            workout.time = `${time} minutes`;
+          }
+        });
+      });
+    }
+
+    return calendar;
   };
 
   return (
