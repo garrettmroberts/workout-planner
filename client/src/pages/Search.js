@@ -7,7 +7,7 @@ function Search(){
   const [state, dispatch] = useStoreContext();
 
   let timeoutID; //ID to clear timeout if textfield changes
-  const clickedWorkouts = []; //declare empty array to store clicked workouts
+  let clickedWorkouts = []; //declare empty array to store clicked workouts
 
   //add Refs to be able manipulate user input fields
   const equipmentRef = useRef();
@@ -105,7 +105,13 @@ function Search(){
   };
 
   const clickedWorkout = (wo)=>{
-    clickedWorkouts.push(wo);
+    if(!state.clickedWorkouts){
+      clickedWorkouts.push(wo);
+    } else {
+      clickedWorkouts = state.clickedWorkouts
+      clickedWorkouts.push(wo);
+    }
+    
     console.log('clickedWorkouts ', clickedWorkouts);
     dispatch({type: 'addclickedworkout', payload: clickedWorkouts});
   }
@@ -113,7 +119,7 @@ function Search(){
   const renderWorkouts = () => {
 
     const workoutStyles = {
-      justifyContent: 'space-evenly'
+      justifyContent: 'space-evenly',
     }
 
     if(state.workoutsToRender){
@@ -123,7 +129,7 @@ function Search(){
         return(
           <div className='row' style={workoutStyles}>
             {state.workoutsToRender.map((wo,i) => 
-              <div key={wo._id}className="card border-dark mb-3 col-3" >
+              <div key={wo._id}className="card border-dark mb-3 col-3 wo-card" >
                 <div className="card-header" onClick={()=>clickedWorkout(wo)}>{wo.name}</div>
                 <div className="card-body text-dark">
                   <ul className="list-group list-group-flush">
@@ -138,13 +144,11 @@ function Search(){
         );
         
       } else {
-        console.log('hit the else which should now show user picks');
-        console.log('STATE.CLICKEDWO ', state.clickedWorkouts)
         return(
           <div className='row' style ={workoutStyles}>
             <div className='col-9'>
             {state.workoutsToRender.map((wo,i) => 
-                <div key={wo._id}className="card border-dark mb-3 col-3" >
+                <div key={wo._id}className="card border-dark mb-3 col-3 wo-card" >
                   <div className="card-header" onClick={()=>clickedWorkout(wo)}>{wo.name}</div>
                   <div className="card-body text-dark">
                     <ul className="list-group list-group-flush">
@@ -157,9 +161,10 @@ function Search(){
               )}
             </div>
             <div className='col-3'>
+              <h5>Selected Workouts</h5>
             {state.clickedWorkouts.map((wo,i) => 
-                <div key={i}className="card border-dark mb-3 col-3" >
-                  <div className="card-header">{wo.name} CLICKED</div>
+                <div key={i}className="card border-dark mb-3 col-3 wo-card" >
+                  <div className="card-header">{wo.name}</div>
                   <div className="card-body text-dark">
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item">Category: {wo.category}</li>
@@ -176,31 +181,6 @@ function Search(){
       }
     }
   };
-
-  // const renderClicks = () => {
-  //   if(clickedWorkouts.length > 0){
-  //     return(
-  //       <div className='row'>
-  //             {clickedWorkouts.map((wo,i) => 
-  //                 <div key={i}className="card border-dark mb-3 col-3" >
-  //                   <div className="card-header">{wo.name}</div>
-  //                   <div className="card-body text-dark">
-  //                     <ul className="list-group list-group-flush">
-  //                       <li className="list-group-item">Category: {wo.category}</li>
-  //                       <li className="list-group-item">Muscles: {wo.muscleGroup}</li>
-  //                       <li className="list-group-item">Equipment: {wo.equipment}</li>
-  //                     </ul>
-  //                   </div>
-  //                 </div>
-  //               )}
-  //         </div>
-  //     );
-  //   } else{
-  //     return(
-  //       <div>NO CLICKS</div>
-  //     )
-  //   }
-  // }
 
   const renderPage = () =>{
     if(!state.currentUser){

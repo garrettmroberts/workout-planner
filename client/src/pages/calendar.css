@@ -15,3 +15,7 @@
 .card {
   margin: 5px;
 }
+
+.wo-card{
+  min-width: 220px;
+}
