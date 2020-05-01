@@ -56,6 +56,18 @@ const reducer = (state, action) => {
           ...state,
           currentUser: action.payload
         }
+    case 'addclickedworkout':
+      let workouts;
+      if(state.clickedWorkouts){
+         workouts = state.clickedWorkouts;
+         workouts.push(action.payload);
+      } else {
+        workouts = action.payload;
+      }
+      return {
+        ...state,
+        clickedWorkouts: workouts
+      }
     default:
       console.log('STATE in reducer: ', state);
       return state;
