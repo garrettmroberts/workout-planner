@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from 'react-router-dom';
 import { useStoreContext } from "../../utils/GlobalState";
 import API from '../../utils/API';
@@ -34,7 +34,6 @@ function Nav() {
           </Link>
           <Link className='nav-link' to='/calendar'>Calendar</Link>
           <Link className='nav-link' to='/create'>Create</Link>
-          <Link className='nav-link' to='/recent'>Recent</Link>
           <Link className='nav-link' to='/search'>Search</Link>
           <button className='nav-btns btn btn-warning' onClick={logOut}>Logout</button>
         </nav>
