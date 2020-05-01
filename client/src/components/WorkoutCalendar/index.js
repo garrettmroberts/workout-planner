@@ -1,14 +1,21 @@
 import React from "react";
-import axios from "axios";
+import { DateTime } from "luxon";
 import { useStoreContext, StoreProvider } from "../../utils/GlobalState";
 import Card from "../Card";
 import "./style.css";
 
 function WorkoutCalendar() {
   const [state] = useStoreContext();
-  console.log(state.currentUser.calendar);
-  const workoutCards = state.currentUser.calendar.map(({ day, workouts }) => {
-    return <Card day={day} key={day} workouts={workouts}/>
+
+  // Creates a workout for each card that is on either today or later
+  const workoutCards = state.currentUser.calendar.map(({ day, workouts, jsDate}) => {
+    const jsDateCleaned = DateTime.fromISO(jsDate).toISODate();
+    const jsMilliseconds = DateTime.fromISO(jsDateCleaned).toMillis();
+    const todayCleaned = DateTime.local().toISODate();
+    const todayMilliseconds = DateTime.fromISO(todayCleaned).toMillis();
+    if (jsMilliseconds >= todayMilliseconds) {
+      return <Card day={day} key={day} workouts={workouts} jsDate={jsDate} />
+    }
   });
 
   return(

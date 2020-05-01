@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css"
 
-function Card({ day, workouts}) {
+function Card({ day, workouts, jsDate }) {
   const workoutSection = workouts.map(workout => {
     if (workout.category === "strength") {
       return <li className="list-group-item" key={Math.floor(Math.random() * 100000)}>
