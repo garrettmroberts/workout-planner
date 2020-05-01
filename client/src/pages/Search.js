@@ -17,11 +17,6 @@ function Search(){
     }).catch(err=> console.log(err));
   },[]);
 
-  //check when workoutsToRender gets set
-  useEffect(()=>{
-    console.log('HIT NEW USEEFFECT');
-  }, [state.workoutsToRender]);
-
   const getAllWorkouts = () => {
     API.getWorkouts()
     .then(res => {
@@ -34,7 +29,6 @@ function Search(){
     clearTimeout(timeoutID); //clear timeout if input changes
 
     const { name, value } = e.target;
-    
     debouncedSearch(name, value, 700); //send API search after 700 ms
   }
 
@@ -68,7 +62,7 @@ function Search(){
             break
           default:
             console.log('HIT DEFAULT');
-        }
+        } 
       }
     }, interval);
   };
