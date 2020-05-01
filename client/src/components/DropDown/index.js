@@ -1,15 +1,14 @@
 import React from "react";
 
-function DropDown({ name, type, keys, func }) {
+function DropDown({ display, type, keys, name, func }) {
   return <div>
     <button type="button" className={`btn btn-${type} dropdown-toggle btn-lg btn-block`} data-toggle="dropdown">
-      {name.charAt(0).toUpperCase() + name.slice(1)}
+      {display.charAt(0).toUpperCase() + display.slice(1)}
     </button>
     <div className="dropdown-menu">
       {keys.map(key => {
-        return <button className="dropdown-item" type="button" key={key} data-key={key} onClick={e => {
-          console.log('DATAKEY ', e.target);
-          // func()
+        return <button className="dropdown-item" type="button" key={key} data-name={name} data-key={key} onClick={e => {
+          func(e)
         }}>
           {key.charAt(0).toUpperCase() + key.slice(1)}
         </button>

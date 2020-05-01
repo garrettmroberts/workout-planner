@@ -38,32 +38,12 @@ function Search(){
   
   const handleChange = (e) => {
     clearTimeout(timeoutID); //clear timeout if input changes
-
-    clearInputs(e);
-
-    const { name, value } = e.target;
+    const name = e.target.dataset.name;
+    const value = e.target.dataset.key;
     debouncedSearch(name, value, 700); //send API search after 700 ms
   }
 
-  // Clear the input fields that are not being actively edited
-  const clearInputs = e => {
-    if (e.target.name === 'equipment-search'){
-      categoryRef.current.value = '';
-      muscleRef.current.value = '';
-    } else if (e.target.name === 'category-search'){
-      equipmentRef.current.value = '';
-      muscleRef.current.value = '';
-    } else if (e.target.name === 'muscle-search'){
-      categoryRef.current.value = '';
-      equipmentRef.current.value = '';
-    }
-  }
-
   const debouncedSearch = (name, value, interval) => {
-    //assign variable names for more concise if statement
-    const equipField = equipmentRef.current.value;
-    const catField = categoryRef.current.value;
-    const muscleField = muscleRef.current.value;
 
     //set a timeout to wait the passed in interval to send API request
     timeoutID = setTimeout(() => {
@@ -97,11 +77,6 @@ function Search(){
             console.log('HIT DEFAULT');
         } 
       } 
-
-      //If all fields are empty populate page with every workout
-      if (catField === '' && equipField === '' && muscleField ===''){
-        getAllWorkouts()
-      }
     }, interval);
   };
 
@@ -182,7 +157,6 @@ function Search(){
       }
     }
   };
-const categoryKeys = ["strength", "cardio"]
 
   const renderPage = () =>{
     if(!state.currentUser){
@@ -194,20 +168,13 @@ const categoryKeys = ["strength", "cardio"]
       <form>
           <div className='row'>
             <div className = 'col'>
-              <label>Search by equipment</label>
-              <input type='text' id='equip' onChange={handleChange} 
-              ref={equipmentRef} name='equipment-search'/>
+            <DropDown display="Filter by equipment" type="primary" keys={["barbell", "dumbbell", "exercise ball", "curl bar", "machine", "bicycle"]} name="equipment-search" func={handleChange} />
             </div>
             <div className = 'col'>
-              <label>Search by muscle group</label>
-              <input type='text' onChange={handleChange}
-               ref={muscleRef} name='muscle-search'/>
+            <DropDown display="Filter by muscle group" type="primary" keys={["chest", "triceps", "shoulders", "forearms", "hamstrings", "quadriceps", "calves", "lats", "biceps", "middle back", "lower back", "traps"]} name="muscle-search" func={handleChange} />
             </div>
             <div className = 'col'>
-              <DropDown name="Filter by category" type="primary" keys={categoryKeys} func={handleChange} />
-              <label>Search by category</label>
-              <input type='text'  onChange={handleChange} 
-              ref={categoryRef}  name='category-search'/>
+            <DropDown display="Filter by category" type="primary" keys={["strength", "cardio"]} name="category-search" func={handleChange} />
             </div>
           </div>
         </form>

@@ -28,9 +28,7 @@ function SignUpForm(){
 
       //adds user to the database
       API.addUser(newUser)
-      .then(res => {
-        console.log('res.data ', res.data);
-      })
+      .then(res => console.log('res.data ', res.data))
       .catch(err => console.log(err));
     }
     //TODO
@@ -86,7 +84,6 @@ function SignUpForm(){
           <input className="form-control mb-5" ref={lastRef} placeholder="Last name" />
         </div>
       </div>
-      <input className="form-control mb-5" required ref={emailRef} placeholder="Email" />
       {/* TODO: change password fields to hidden text */}
       <div className='row'>
           <div className = 'col'>
