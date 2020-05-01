@@ -98,6 +98,7 @@ function SignUpForm(){
           <input className="form-control mb-5" ref={lastRef} placeholder="Last name" />
         </div>
       </div>
+      <input className="form-control mb-5" required ref={emailRef} placeholder="Email" />
       {/* TODO: change password fields to hidden text */}
       <div className='row'>
           <div className = 'col'>
