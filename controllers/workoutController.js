@@ -3,7 +3,6 @@ const db = require("../models");
 module.exports = {
   // Find all workouts
   findAll: function(req, res) {
-    console.log('HIT FIND ALL');
     db.Workout.find()
       .then(dbModel => {
         console.log('DBMODEL: ', dbModel);
@@ -13,8 +12,10 @@ module.exports = {
   },
 
   // Find workout by category
+  // The $regex and $options allow results to be returned if the database field
+  // contains any of the search string, case insensitive
   findByCategory: function(req, res) {
-    db.Workout.find({category: req.params.category})
+    db.Workout.find({category: { '$regex':req.params.category, '$options': 'i' }})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -28,22 +29,25 @@ module.exports = {
   },
 
   // Find workout by available equipment
+  // The $regex and $options allow results to be returned if the database field
+  // contains any of the search string, case insensitive
   findByEquipment: function(req, res) {
-    db.Workout.find({equipment: req.params.equipment})
+    db.Workout.find({equipment: { '$regex': req.params.equipment,'$options': 'i' }})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
 
   // Finds workout by muscle group
+  // The $regex and $options allow results to be returned if the database field
+  // contains any of the search string, case insensitive
   findByMuscleGroup: function (req, res) {
-    db.Workout.find({ muscleGroup: req.params.muscle})
+    db.Workout.find({ muscleGroup: { '$regex': req.params.muscle,'$options': 'i' }})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
 
   // Add new workout
   addWorkout: function(req, res) {
-    console.log('REQBODY: ' ,req.body);
     db.Workout.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
