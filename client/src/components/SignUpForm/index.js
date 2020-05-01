@@ -1,8 +1,11 @@
 import React, { useRef } from 'react';
+import { Redirect } from 'react-router-dom';
 import API from '../../utils/API';
+import { useStoreContext } from "../../utils/GlobalState";
 
 function SignUpForm(){
 
+  const [,dispatch] = useStoreContext();
   //list of references to differentiate inputs
   const emailRef = useRef();
   const firstRef = useRef();
@@ -28,7 +31,13 @@ function SignUpForm(){
 
       //adds user to the database
       API.addUser(newUser)
-      .then(res => console.log('res.data ', res.data))
+      .then(res => {
+        console.log('res.data ', res.data);
+        const user = res.data;
+        if(res.data){
+          dispatch({ type: 'setuser',user: user})
+        }
+      })
       .catch(err => console.log(err));
     }
     //TODO
@@ -41,6 +50,11 @@ function SignUpForm(){
     pwRef1.current.value = '';
     pwRef2.current.value = '';
   };
+
+  const redirect = () => {
+    console.log('wtf');
+    return ( <Redirect to='/'/> );
+  }
 
 
   //funciton returns a boolean depending on if the string matches the reg ex inside
