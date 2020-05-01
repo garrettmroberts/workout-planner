@@ -6,7 +6,6 @@ import Nav from './components/Nav';
 import Home from './pages/Home';
 import Calendar from './pages/Calendar';
 import CreateWorkout from './pages/CreateWorkout';
-import RecentWorkouts from './pages/RecentWorkouts';
 import Search from './pages/Search';
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
               <Route exact path='/' component={Home} />
               <Route exact path='/calendar' component={Calendar} />
               <Route exact path='/create' component={CreateWorkout} />
-              <Route exact path='/recent' component={RecentWorkouts} />
               <Route exact path='/search' component={Search} />
             </Switch>
         </StoreProvider>
