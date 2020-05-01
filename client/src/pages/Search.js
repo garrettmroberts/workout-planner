@@ -32,10 +32,8 @@ function Search(){
   
   const handleChange = (e) => {
     clearTimeout(timeoutID); //clear timeout if input changes
-    
+
     const { name, value } = e.target;
-    let reggie = new RegExp(value, 'i');
-    console.log('reggie ', reggie);
     
     debouncedSearch(name, value, 700); //send API search after 700 ms
   }
@@ -75,9 +73,6 @@ function Search(){
     }, interval);
   };
 
-  const styles = {
-    maxwidth: ''
-  }
   const renderWorkouts = () => {
     if(state.workoutsToRender){
 
@@ -88,7 +83,7 @@ function Search(){
       return(
         <div className='row' style={workoutStyles}>
           {state.workoutsToRender.map((wo,i) => 
-            <div key={wo._id}className="card border-dark mb-3 col-3" style={styles}>
+            <div key={wo._id}className="card border-dark mb-3 col-3" >
               <div className="card-header">{wo.name}</div>
               <div className="card-body text-dark">
                 <ul className="list-group list-group-flush">
