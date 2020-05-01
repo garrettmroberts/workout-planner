@@ -264,6 +264,7 @@ function GoalsForm() {
 
       let dayPlan = {
         day: readableDate,
+        jsDate: today,
         workouts: dayExercises
 
       };
