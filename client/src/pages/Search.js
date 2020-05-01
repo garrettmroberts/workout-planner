@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useStoreContext } from '../utils/GlobalState';
 import API from '../utils/API';
@@ -7,6 +7,11 @@ function Search(){
   const [state, dispatch] = useStoreContext();
 
   let timeoutID; //ID to clear timeout if textfield changes
+
+  //add Refs to be able manipulate user input fields
+  const equipmentRef = useRef();
+  const categoryRef = useRef();
+  const muscleRef = useRef();
 
   //get user data from api and store to global context
   useEffect(()=>{
@@ -17,6 +22,7 @@ function Search(){
     }).catch(err=> console.log(err));
   },[]);
 
+  //get all workouts in database
   const getAllWorkouts = () => {
     API.getWorkouts()
     .then(res => {
@@ -28,11 +34,32 @@ function Search(){
   const handleChange = (e) => {
     clearTimeout(timeoutID); //clear timeout if input changes
 
+    clearInputs(e);
+
     const { name, value } = e.target;
     debouncedSearch(name, value, 700); //send API search after 700 ms
   }
 
+  const clearInputs = e => {
+    if (e.target.name === 'equipment-search'){
+      categoryRef.current.value = '';
+      muscleRef.current.value = '';
+    } else if (e.target.name === 'category-search'){
+      equipmentRef.current.value = '';
+      muscleRef.current.value = '';
+    } else if (e.target.name === 'muscle-search'){
+      categoryRef.current.value = '';
+      equipmentRef.current.value = '';
+    }
+  }
+
   const debouncedSearch = (name, value, interval) => {
+    //assign variable names for more concise if statement
+    const equipField = equipmentRef.current.value;
+    const catField = categoryRef.current.value;
+    const muscleField = muscleRef.current.value;
+
+    //set a timeout to wait the passed in interval to send API request
     timeoutID = setTimeout(() => {
       if(value){
         switch (name){
@@ -63,6 +90,11 @@ function Search(){
           default:
             console.log('HIT DEFAULT');
         } 
+      } 
+
+      //If all fields are empty populate page with every workout
+      if (catField === '' && equipField === '' && muscleField ===''){
+        getAllWorkouts()
       }
     }, interval);
   };
@@ -104,15 +136,18 @@ function Search(){
           <div className='row'>
             <div className = 'col'>
               <label>Search by equipment</label>
-              <input type='text' id='equip' onChange={handleChange} name='equipment-search'/>
+              <input type='text' id='equip' onChange={handleChange} 
+              ref={equipmentRef} name='equipment-search'/>
             </div>
             <div className = 'col'>
               <label>Search by muscle group</label>
-              <input type='text' onChange={handleChange} name='muscle-search'/>
+              <input type='text' onChange={handleChange}
+               ref={muscleRef} name='muscle-search'/>
             </div>
             <div className = 'col'>
               <label>Search by category</label>
-              <input type='text'  onChange={handleChange}  name='category-search'/>
+              <input type='text'  onChange={handleChange} 
+              ref={categoryRef}  name='category-search'/>
             </div>
           </div>
         </form>
