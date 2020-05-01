@@ -28,7 +28,9 @@ function SignUpForm(){
 
       //adds user to the database
       API.addUser(newUser)
-      .then(res => console.log('res.data ', res.data))
+      .then(res => {
+        console.log('res.data ', res.data);
+      })
       .catch(err => console.log(err));
     }
     //TODO

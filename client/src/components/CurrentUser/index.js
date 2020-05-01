@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { DateTime } from "luxon";
 import { useStoreContext } from '../../utils/GlobalState';
 import './style.css';
+import API from "../../utils/API";
 import Card from "../Card";
 
 function CurrentUser (){
 
-  const [state,] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
   const user = state.currentUser;
+
+  useEffect(() => {
+    user.calendar.map((day, index) => {
+      const jsDate = day.jsDate;
+      const jsDateCleaned = DateTime.fromISO(jsDate).toISODate();
+      const jsMilliseconds = DateTime.fromISO(jsDateCleaned).toMillis();
+      const todayCleaned = DateTime.local().toISODate();
+      const todayMilliseconds = DateTime.fromISO(todayCleaned).toMillis();
+      if (jsMilliseconds < todayMilliseconds) {
+        const id = user._id;
+        user.calendar.splice(index, 1);
+        dispatch({type: "updateUser", payload: user});
+        API.updateUser(user, id);
+      };
+    })
+  }, []);
 
   const listItems= (itemArray, itemName) => {
 
@@ -31,7 +49,6 @@ function CurrentUser (){
   };
 
   const setCalendar = () => {
-    console.log(user.calendar);
 
     if(user.calendar.length > 0){
       const workoutSection = user.calendar[0].workouts.map(workout => {
