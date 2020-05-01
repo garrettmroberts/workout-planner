@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useStoreContext } from '../utils/GlobalState';
+import DropDown from '../components/DropDown';
 import API from '../utils/API';
 
 function Search(){
@@ -201,6 +202,7 @@ function Search(){
   //     )
   //   }
   // }
+  const categoryKeys = ["strength", "cardio"]
 
   const renderPage = () =>{
     if(!state.currentUser){
@@ -222,6 +224,7 @@ function Search(){
                ref={muscleRef} name='muscle-search'/>
             </div>
             <div className = 'col'>
+              <DropDown name="Filter by category" type="primary" keys={["strength", "cardio"]} func={handleChange} />
               <label>Search by category</label>
               <input type='text'  onChange={handleChange} 
               ref={categoryRef}  name='category-search'/>
