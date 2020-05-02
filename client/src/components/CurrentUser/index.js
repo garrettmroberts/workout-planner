@@ -57,8 +57,7 @@ function CurrentUser (){
   };
 
   const setCalendar = () => {
-
-    if(user.calendar){
+    if(user.calendar[0]){
       const workoutSection = user.calendar[0].workouts.map(workout => {
         if (workout.category === "strength") {
           return <li className="list-group-item" key={Math.floor(Math.random() * 100000)}>
