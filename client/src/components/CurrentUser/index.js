@@ -11,19 +11,27 @@ function CurrentUser (){
   const user = state.currentUser;
 
   useEffect(() => {
-    user.calendar.map((day, index) => {
-      const jsDate = day.jsDate;
-      const jsDateCleaned = DateTime.fromISO(jsDate).toISODate();
-      const jsMilliseconds = DateTime.fromISO(jsDateCleaned).toMillis();
-      const todayCleaned = DateTime.local().toISODate();
-      const todayMilliseconds = DateTime.fromISO(todayCleaned).toMillis();
-      if (jsMilliseconds < todayMilliseconds) {
-        const id = user._id;
-        user.calendar.splice(index, 1);
-        dispatch({type: "updateUser", payload: user});
-        API.updateUser(user, id);
-      };
-    })
+
+    API.getLoggedInUser().then(res =>{
+      const user = res.data;
+      if(res.data) { dispatch({ type: 'setuser', user: user});}
+    }).catch(err=> console.log(err));
+
+    if(user.calendar){
+      user.calendar.map((day, index) => {
+        const jsDate = day.jsDate;
+        const jsDateCleaned = DateTime.fromISO(jsDate).toISODate();
+        const jsMilliseconds = DateTime.fromISO(jsDateCleaned).toMillis();
+        const todayCleaned = DateTime.local().toISODate();
+        const todayMilliseconds = DateTime.fromISO(todayCleaned).toMillis();
+        if (jsMilliseconds < todayMilliseconds) {
+          const id = user._id;
+          user.calendar.splice(index, 1);
+          dispatch({type: "updateUser", payload: user});
+          API.updateUser(user, id);
+        };
+      })
+    }
   }, []);
 
   const listItems= (itemArray, itemName) => {
@@ -50,7 +58,7 @@ function CurrentUser (){
 
   const setCalendar = () => {
 
-    if(user.calendar.length > 0){
+    if(user.calendar){
       const workoutSection = user.calendar[0].workouts.map(workout => {
         if (workout.category === "strength") {
           return <li className="list-group-item" key={Math.floor(Math.random() * 100000)}>

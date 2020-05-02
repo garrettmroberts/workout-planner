@@ -18,9 +18,15 @@ router
 .route("/equipment/:equipment")
 .get(workoutController.findByEquipment)
 
+// Matches with /api/workouts/musclegroup/:muscle
 router
 .route("/musclegroup/:muscle")
 .get(workoutController.findByMuscleGroup)
+
+router
+.route('/regex/:query')
+.get(workoutController.findWithRegex)
+
 
 // Matches with /api/workouts
 router

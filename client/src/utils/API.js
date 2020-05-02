@@ -5,6 +5,9 @@ export default {
   getWorkouts: function(){
     return axios.get('/api/workouts');
   },
+  regexSearch: function(query){
+    return axios.get('/api/workouts/regex/'+ query);
+  },
   //search for workouts by equipement
   findByEquipment: function(equipment){
     return axios.get('/api/workouts/equipment/'+ equipment);
