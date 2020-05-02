@@ -15,6 +15,9 @@
 .card {
   margin: 5px;
 }
+.center-things{
+  align-content: center;
+}
 
 .wo-card{
   min-width: 220px;

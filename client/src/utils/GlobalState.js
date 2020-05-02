@@ -61,6 +61,11 @@ const reducer = (state, action) => {
         ...state,
         clickedWorkouts: action.payload
       }
+    case 'clearclickedworkouts':
+      return {
+        ...state,
+        clickedWorkouts: null
+      }
     default:
       console.log('STATE in reducer: ', state);
       return state;

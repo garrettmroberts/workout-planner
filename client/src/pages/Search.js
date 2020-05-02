@@ -9,7 +9,7 @@ function Search(){
 
   let timeoutID; //ID to clear timeout if textfield changes
   let clickedWorkouts = []; //declare empty array to store clicked workouts
-
+  
   //add Refs to be able manipulate user text fields
   const searchRef = useRef();
 
@@ -18,7 +18,7 @@ function Search(){
     getAllWorkouts();
     API.getLoggedInUser().then(res =>{
       const user = res.data;
-      if(res.data) { dispatch({ type: 'setuser',user: user});}
+      if(res.data) { dispatch({ type: 'setuser', user: user});}
     }).catch(err=> console.log(err));
   },[]);
 
@@ -35,6 +35,7 @@ function Search(){
   };
   
   const handleChange = (e) => {
+    e.preventDefault();
     clearTimeout(timeoutID); //clear timeout if input changes
 
     // check if change is from drop down and set variables accordingly
@@ -44,7 +45,11 @@ function Search(){
       debouncedSearch(name, value, 50); //send API search after 700 ms
     }
       const { name, value } = e.target;
-      console.log('name, value ', name, value);
+    if(name === 'clear-filters'){
+      getAllWorkouts();
+      searchRef.current.value = '';
+    }
+      console.log('name, value ', name, typeof value);
       debouncedSearch(name, value, 700);
   };
 
@@ -79,8 +84,7 @@ function Search(){
             .catch(err => console.log(err));
             break
           case 'regex-search':
-            console.log('hit regex search swithc. value: ', value);
-            API.regexSearch(value)
+              API.regexSearch(value)
             .then(res => {
               console.log('res.data ', res.data)
               dispatch({type: 'setworkouts', payload: res.data})
@@ -89,7 +93,7 @@ function Search(){
           default:
             console.log('HIT DEFAULT');
         } 
-      } 
+      }
     }, interval);
   };
 
@@ -105,6 +109,15 @@ function Search(){
     dispatch({type: 'addclickedworkout', payload: clickedWorkouts});
   }
 
+  const clearClickedWorkouts = (e) =>{
+    e.preventDefault();
+    dispatch({type: 'clearclickedworkouts'});
+  };
+
+  //could make a
+  const makeCustomWorkout = () =>{
+    console.log('coming soon');
+  }
   const renderWorkouts = () => {
 
     const workoutStyles = {
@@ -112,9 +125,7 @@ function Search(){
     };
 
     if(state.workoutsToRender){
-      
       if(!state.clickedWorkouts){
-        console.log('hit the if which is now default');
         return(
           <div className='row' style={workoutStyles}>
             {state.workoutsToRender.map((wo,i) => 
@@ -137,7 +148,7 @@ function Search(){
           <div className='row' style ={workoutStyles}>
             <div className='col-9'>
             {state.workoutsToRender.map((wo,i) => 
-                <div key={wo._id}className="card border-dark mb-3 col-3 wo-card" >
+                <div key={wo._id}className="card border-dark mb-3 wo-card" >
                   <div className="card-header" onClick={()=>clickedWorkout(wo)}>{wo.name}</div>
                   <div className="card-body text-dark">
                     <ul className="list-group list-group-flush">
@@ -149,10 +160,19 @@ function Search(){
                 </div>
               )}
             </div>
-            <div className='col-3'>
-              <h5>Selected Workouts</h5>
-            {state.clickedWorkouts.map((wo,i) => 
-                <div key={i}className="card border-dark mb-3 col-3 wo-card" >
+            <div className='col-3 center-things'>
+              <div className ='row'>
+              <h5>Selected Exercises</h5>
+                <div className='col'>
+                  <button className='btn btn-warning' onClick={clearClickedWorkouts}>Clear selections</button>
+                </div>
+                <div className='col'>
+                  <button className='btn btn-success' onClick={makeCustomWorkout}>Add custom workout</button>
+                </div>
+              </div>
+              
+              {state.clickedWorkouts.map((wo,i) => 
+                <div key={i}className="card border-dark mb-3 wo-card" >
                   <div className="card-header">{wo.name}</div>
                   <div className="card-body text-dark">
                     <ul className="list-group list-group-flush">
@@ -189,8 +209,13 @@ function Search(){
             <div className = 'col'>
             <DropDown display="Filter by category" type="primary" keys={["strength", "cardio"]} name="category-search" func={handleChange} />
             </div>
+          </div>
+          <div className = 'row'>
             <div className = 'col'>
-              <input placeholder='Search' name='regex-search' ref={searchRef} onChange={handleChange}/>
+                <input placeholder='Search' name='regex-search' ref={searchRef} onChange={handleChange}/>
+            </div>
+            <div className = 'col'>
+              <button className='btn btn-info' name='clear-filters' onClick={handleChange}>Clear Filters</button>
             </div>
           </div>
         </form>
