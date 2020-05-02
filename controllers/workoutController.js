@@ -46,6 +46,18 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
 
+  //use a regex search to match the query with any field in the db
+  findWithRegex: function (req, res) {
+    db.Workout.find({
+      $or:[
+        {equipment: { '$regex': req.params.query,'$options': 'i' }},
+        { muscleGroup: { '$regex': req.params.query,'$options': 'i' }},
+        {category: { '$regex':req.params.query, '$options': 'i' }},
+        {name: { '$regex':req.params.query, '$options': 'i' }}
+      ]
+    }).then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
   // Add new workout
   addWorkout: function(req, res) {
     db.Workout.create(req.body)

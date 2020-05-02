@@ -10,10 +10,8 @@ function Search(){
   let timeoutID; //ID to clear timeout if textfield changes
   let clickedWorkouts = []; //declare empty array to store clicked workouts
 
-  //add Refs to be able manipulate user input fields
-  const equipmentRef = useRef();
-  const categoryRef = useRef();
-  const muscleRef = useRef();
+  //add Refs to be able manipulate user text fields
+  const searchRef = useRef();
 
   //get user data from api and store to global context
   useEffect(()=>{
@@ -38,10 +36,17 @@ function Search(){
   
   const handleChange = (e) => {
     clearTimeout(timeoutID); //clear timeout if input changes
-    const name = e.target.dataset.name;
-    const value = e.target.dataset.key;
-    debouncedSearch(name, value, 700); //send API search after 700 ms
-  }
+
+    // check if change is from drop down and set variables accordingly
+    if(e.target.dataset){
+      let name = e.target.dataset.name;
+      let value = e.target.dataset.key;
+      debouncedSearch(name, value, 50); //send API search after 700 ms
+    }
+      const { name, value } = e.target;
+      console.log('name, value ', name, value);
+      debouncedSearch(name, value, 700);
+  };
 
   const debouncedSearch = (name, value, interval) => {
 
@@ -73,6 +78,14 @@ function Search(){
             })
             .catch(err => console.log(err));
             break
+          case 'regex-search':
+            console.log('hit regex search swithc. value: ', value);
+            API.regexSearch(value)
+            .then(res => {
+              console.log('res.data ', res.data)
+              dispatch({type: 'setworkouts', payload: res.data})
+            }).catch(err => console.log(err));
+            break
           default:
             console.log('HIT DEFAULT');
         } 
@@ -96,7 +109,7 @@ function Search(){
 
     const workoutStyles = {
       justifyContent: 'space-evenly',
-    }
+    };
 
     if(state.workoutsToRender){
       
@@ -176,6 +189,9 @@ function Search(){
             <div className = 'col'>
             <DropDown display="Filter by category" type="primary" keys={["strength", "cardio"]} name="category-search" func={handleChange} />
             </div>
+            <div className = 'col'>
+              <input placeholder='Search' name='regex-search' ref={searchRef} onChange={handleChange}/>
+            </div>
           </div>
         </form>
     );
@@ -186,6 +202,6 @@ function Search(){
       {renderPage()}
       {renderWorkouts()}
     </div>
-  )
+  );
 };
 export default Search;
