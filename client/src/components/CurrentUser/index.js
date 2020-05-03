@@ -82,7 +82,7 @@ function CurrentUser (){
     } else {
       return (
         <div className="card cal-card border-dark mb-3">
-          <div className="card-header">No calendar made yet</div>
+          <div className="card-header">No calendar created yet.  Click the calendar tab to begin one.</div>
           <div className='card-body text-dark'>
           </div>
         </div>
@@ -93,7 +93,7 @@ function CurrentUser (){
     return (
       <div className ='container d-flex'>
         <div className='row'>
-          <div className='col'>
+          <div className='col-sm-12'>
             <div className="card user-card border-dark mb-3">
               <div className="card-header">My Equipment</div>
                 <div className="card-body text-dark">
@@ -103,7 +103,7 @@ function CurrentUser (){
                 </div>
             </div>
           </div>
-          <div className='col'>
+          <div className='col-sm-12'>
             <div className="card user-card border-dark mb-3">
               <div className="card-header">My Goal</div>
                 <div className="card-body text-dark">
