@@ -20,8 +20,9 @@ router
   .route('/login')
   .post(passport.authenticate('local'), (req, res) => {
     if(req.user){
-      res.json(req.user);
+      return res.json(req.user);
     }
+    return res.json(null);
     });
 //logout route for passport
 router
