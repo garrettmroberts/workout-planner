@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import { Redirect } from 'react-router-dom';
 import API from '../../utils/API';
 import { useStoreContext } from "../../utils/GlobalState";
 import "./style.css";
+
 
 function SignUpForm(){
 
@@ -13,9 +13,10 @@ function SignUpForm(){
   const lastRef = useRef();
   const pwRef1 = useRef();
   const pwRef2 = useRef();
+  let password = null;
 
   //read two passwords so we can make sure they are the same
-  const handleSubmit = e => {
+  const handleSubmit =  e => {
     e.preventDefault();
 
     const pw1 = pwRef1.current.value;
@@ -30,13 +31,23 @@ function SignUpForm(){
         lastName: lastRef.current.value
       };
 
+      //get unhashed password to send to login
+      password = pw1;
+  
       //adds user to the database
       API.addUser(newUser)
       .then(res => {
-        console.log('res.data ', res.data);
         const user = res.data;
         if(res.data){
-          dispatch({ type: 'setuser',user: user})
+          //log in the user after they are added to the database
+          API.login({email: newUser.email, password: password})
+          .then(() =>{
+            password = null; //clear out password after succesful login
+          })
+          .catch(err=>console.log(err));
+          dispatch({ type: 'setuser', user: user})
+
+          password = null; //clear out password
         }
       })
       .catch(err => console.log(err));
@@ -51,11 +62,6 @@ function SignUpForm(){
     pwRef1.current.value = '';
     pwRef2.current.value = '';
   };
-
-  const redirect = () => {
-    console.log('wtf');
-    return ( <Redirect to='/'/> );
-  }
 
 
   //funciton returns a boolean depending on if the string matches the reg ex inside
