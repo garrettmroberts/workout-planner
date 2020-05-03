@@ -4,11 +4,13 @@ const session = require("express-session");
 const passport = require("./scripts/passport");
 const PORT = process.env.PORT || 3001;
 const routes = require("./routes");
+const path = require("path");
 const app = express();
 
 // Init app middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use('/static', express.static(path.join(__dirname, 'client/build')));
 
 // Enables passport verification
 app.use(session({ secret: 'apple butter', resave: true, saveUninitialized: true }));
