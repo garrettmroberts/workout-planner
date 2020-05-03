@@ -19,7 +19,7 @@ function WorkoutCalendar() {
   });
 
   return(
-    <div className="card-holder">
+    <div className="card-holder d-flex flex-wrap">
       {workoutCards}
     </div>
   );
