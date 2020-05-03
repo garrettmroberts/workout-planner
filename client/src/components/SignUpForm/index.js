@@ -53,7 +53,6 @@ function SignUpForm(){
   };
 
   const redirect = () => {
-    console.log('wtf');
     return ( <Redirect to='/'/> );
   }
 

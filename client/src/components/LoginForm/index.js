@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import API from '../../utils/API';
+import "./style.css";
 
 export default function LoginForm() {
 
@@ -31,16 +32,18 @@ export default function LoginForm() {
     pwRef.current.value = "";
   };
   return (
-    <form className="form-group mt-5 mb-5" onSubmit={handleSubmit}>
-      <div className='row'>
-        <div className='col'>
-        <input className="form-control mb-5" ref={userRef} placeholder="Email" />
+    <form id="login-form" className="p-3 rounded" onSubmit={handleSubmit}>
+      <div className='form-row text-left mb-2'>
+        <div className='col-md-6'>
+          <label>Email</label>
+          <input className="form-control" ref={userRef} placeholder="Email" />
         </div>
-        <div className = 'col'>
-        <input className="form-control mb-5" required ref={pwRef} placeholder="password" />
+        <div className = 'col-md-6'>
+          <label>Password</label>
+          <input className="form-control" required ref={pwRef} type="password" placeholder="Password" />
         </div>
       </div>
-        <button className="btn btn-success mt-3 mb-5" type="submit">Sign In</button>
+        <button className="btn btn-success" type="submit">Sign In</button>
     </form>
   );
 };
