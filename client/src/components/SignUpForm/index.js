@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import API from '../../utils/API';
 import { useStoreContext } from "../../utils/GlobalState";
+import "./style.css";
 
 function SignUpForm(){
 
@@ -89,26 +90,33 @@ function SignUpForm(){
   }
 
   return (
-    <form className="form-group mt-5 mb-5" onSubmit={handleSubmit}>
-      <div className='row'>
-        <div className = 'col'>
-          <input className="form-control mb-5" ref={firstRef} placeholder="First name" />
+    <form onSubmit={handleSubmit} id="signup-form" className="p-3 rounded">
+      <div className="form-row text-left mb-2">
+        <div className="col-md-6">
+          <label>First Name</label>
+          <input className="form-control" ref={firstRef} placeholder="First name" />
         </div>
-        <div className ='col'>
-          <input className="form-control mb-5" ref={lastRef} placeholder="Last name" />
+        <div className="col-md-6">
+          <label>Last Name</label>
+          <input className="form-control" ref={lastRef} placeholder="Last name" />
         </div>
       </div>
-      <input className="form-control mb-5" required ref={emailRef} placeholder="Email" />
-      {/* TODO: change password fields to hidden text */}
-      <div className='row'>
-          <div className = 'col'>
-            <input className="form-control mb-5" required ref={pwRef1} placeholder="password" />
-          </div>
-          <div className ='col'>
-            <input className="form-control mb-5" required ref={pwRef2} placeholder="re enter password" />
-          </div>
+      <div className="form-group text-left">
+        <label>Email</label>
+        <input className="form-control" required ref={emailRef} placeholder="Email" />
+        <small class="form-text">Don't worry.  We'll never share your email with anyone else.</small>
+      </div>
+      <div className="form-row text-left mb-2">
+        <div className="col-md-6">
+          <label>Password</label>
+          <input className="form-control" required ref={pwRef1} placeholder="password" type="password" />
         </div>
-      <button className="btn btn-success mt-3 mb-5" type="submit">Make User</button>
+        <div className="col-md-6">
+          <label>Re-enter password</label>
+          <input className="form-control" required ref={pwRef2} placeholder="re enter password" type="password" />
+        </div>
+      </div>
+      <button className="btn btn-success" type="submit">Create User</button>
     </form>
   );
 }
