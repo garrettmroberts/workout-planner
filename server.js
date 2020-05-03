@@ -9,6 +9,7 @@ const app = express();
 // Init app middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(express.static('client/build'));
 
 // Enables passport verification
 app.use(session({ secret: 'apple butter', resave: true, saveUninitialized: true }));
