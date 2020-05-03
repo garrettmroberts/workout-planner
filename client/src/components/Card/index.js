@@ -15,7 +15,7 @@ function Card({ day, workouts, jsDate }) {
   })
 
   return(
-    <div className="card border-dark mb-3">
+    <div className="card calendar-card border-dark mb-3">
       <div className="card-header">{day}</div>
       <div className="card-body text-dark">
         <ul className="list-group list-group-flush">
