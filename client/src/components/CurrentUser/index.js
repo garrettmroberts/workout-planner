@@ -91,7 +91,7 @@ function CurrentUser (){
   }
   const getRender = () => {
     return (
-      <div className ='container'>
+      <div className ='container d-flex'>
         <div className='row'>
           <div className='col'>
             <div className="card user-card border-dark mb-3">
@@ -124,6 +124,7 @@ function CurrentUser (){
       <div className="jumbotron jumbotron-fluid">
         <div className="container" >
           <h2 className="display-4">Welcome, {user.firstName}</h2>
+          <h5 className="display-5 text-center">Here's what your day looks like:</h5>
         </div>
       </div>
       {getRender()}
