@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { DateTime } from "luxon";
 import { useStoreContext } from '../../utils/GlobalState';
-import './style.css';
+import './style.module.css';
 import API from "../../utils/API";
 import Card from "../Card";
 

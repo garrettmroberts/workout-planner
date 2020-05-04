@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useStoreContext } from "../utils/GlobalState";
-import LoginForm from '../components/LoginForm';
-import SignUpForm from '../components/SignUpForm';
-import API from '../utils/API';
-import CurrentUser from '../components/CurrentUser';
-import Greeting from '../components/Greeting';
+import { useStoreContext } from "../../utils/GlobalState";
+import LoginForm from '../../components/LoginForm';
+import SignUpForm from '../../components/SignUpForm';
+import API from '../../utils/API';
+import CurrentUser from '../../components/CurrentUser';
+import Greeting from '../../components/Greeting';
+import "./Home.css";
 
 
 function Home() {

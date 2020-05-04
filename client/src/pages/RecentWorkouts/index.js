@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { useStoreContext } from "../utils/GlobalState";
-import API from '../utils/API';
+import { useStoreContext } from "../../utils/GlobalState";
+import API from '../../utils/API';
+import "./RecentWorkouts.css";
 
 function RecentWorkouts(){
 

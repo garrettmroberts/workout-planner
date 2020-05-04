@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import API from '../../utils/API';
-import "./style.css";
+import "./style.module.css";
 
 export default function LoginForm() {
 

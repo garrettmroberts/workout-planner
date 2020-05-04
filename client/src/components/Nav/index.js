@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { useStoreContext } from "../../utils/GlobalState";
 import API from '../../utils/API';
-import './style.css';
+import './style.module.css';
 
 function Nav() {
 

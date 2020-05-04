@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import API from "../../utils/API";
 import { useStoreContext } from "../../utils/GlobalState";
-import "./style.css";
+import "./style.module.css";
 
 function GoalsForm() {
   const [formState, setFormState] = useState({

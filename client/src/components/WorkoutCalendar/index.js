@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { DateTime } from "luxon";
 import { useStoreContext } from "../../utils/GlobalState";
 import Card from "../Card";
-import "./style.css";
+import "./style.module.css";
 
 function WorkoutCalendar() {
   const [state] = useStoreContext();

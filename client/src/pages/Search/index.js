@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
-import { useStoreContext } from '../utils/GlobalState';
-import DropDown from '../components/DropDown';
-import API from '../utils/API';
+import { useStoreContext } from '../../utils/GlobalState';
+import DropDown from '../../components/DropDown';
+import API from '../../utils/API';
+import "./Search.css";
 
 function Search(){
   const [state, dispatch] = useStoreContext();

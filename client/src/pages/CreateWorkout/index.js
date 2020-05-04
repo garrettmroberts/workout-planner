@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import WorkoutForm from '../components/WorkoutForm';
-import { useStoreContext } from '../utils/GlobalState'
-import API from '../utils/API';
+import WorkoutForm from '../../components/WorkoutForm';
+import { useStoreContext } from '../../utils/GlobalState'
+import API from '../../utils/API';
 import { Store } from 'express-session';
+import "./CreateWorkout.css";
 
 function CreateWorkout(){
   const [state, dispatch] = useStoreContext();
