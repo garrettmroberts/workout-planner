@@ -7,10 +7,13 @@ const routes = require("./routes");
 const path = require("path");
 const app = express();
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+};
+
 // Init app middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Enables passport verification
 app.use(session({ secret: 'apple butter', resave: true, saveUninitialized: true }));
