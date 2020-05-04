@@ -5,7 +5,6 @@ module.exports = {
   findAll: function(req, res) {
     db.Workout.find()
       .then(dbModel => {
-        console.log('DBMODEL: ', dbModel);
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
@@ -22,7 +21,6 @@ module.exports = {
 
   // Find Workout by ID
   findByID: function(req, res) {
-    console.log("ID: ", req.params.id);
     db.Workout.findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

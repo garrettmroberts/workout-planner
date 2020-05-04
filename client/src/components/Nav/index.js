@@ -9,10 +9,8 @@ function Nav() {
   //Test nav component to read to store and return to home page
   const [store, dispatch] = useStoreContext();
   const logOut = () =>{
-    API.logout().then(res =>{
-      console.log('RES IN LOGOUT ', res);
+    API.logout().then(() =>{
       dispatch({type: 'logout'} );
-
     }).catch(err => console.log(err));
   }
 

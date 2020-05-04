@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DateTime } from "luxon";
-import { useStoreContext, StoreProvider } from "../../utils/GlobalState";
+import { useStoreContext } from "../../utils/GlobalState";
 import Card from "../Card";
 import "./style.css";
 
