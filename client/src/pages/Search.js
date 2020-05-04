@@ -23,7 +23,6 @@ function Search(){
   },[]);
 
   useEffect(()=> {
-    console.log('HIT THE NEW ONE ');
   },[clickedWorkouts.length])
   //get all workouts in database
   const getAllWorkouts = () => {
