@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import API from '../../utils/API';
-
+import './style.css';
 function WorkoutForm(){
 
   //references to get text values from inputs
@@ -46,7 +46,7 @@ function WorkoutForm(){
   }
 
   return (
-    <form className="form-group mt-5 mb-5" onSubmit={handleSubmit}>
+    <form className="form-group mt-5 mb-5 center-things" onSubmit={handleSubmit}>
       <input className="form-control mb-5" required ref={nameRef} placeholder="Name" />
       <input className="form-control mb-5" required ref={catRef} placeholder="Category" />
       <input className="form-control mb-5" ref={equipmentRef} placeholder="Equipement needed" />

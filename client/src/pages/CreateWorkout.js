@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import WorkoutForm from '../components/WorkoutForm';
 import { useStoreContext } from '../utils/GlobalState'
 import API from '../utils/API';
-import { Store } from 'express-session';
+
 
 function CreateWorkout(){
   const [state, dispatch] = useStoreContext();

@@ -13,9 +13,11 @@ function WorkoutCalendar() {
     const jsMilliseconds = DateTime.fromISO(jsDateCleaned).toMillis();
     const todayCleaned = DateTime.local().toISODate();
     const todayMilliseconds = DateTime.fromISO(todayCleaned).toMillis();
-    if (jsMilliseconds >= todayMilliseconds) {
+    
+    // if statement is preventing cards from rendering initially
+    // if (jsMilliseconds >= todayMilliseconds) {
       return <Card day={day} key={day} workouts={workouts} jsDate={jsDate} />
-    }
+    // }
   });
 
   return(

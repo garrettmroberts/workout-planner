@@ -96,7 +96,7 @@ function SignUpForm(){
   }
 
   return (
-    <form onSubmit={handleSubmit} id="signup-form" className="p-3 rounded">
+    <form onSubmit={handleSubmit} id="signup-form" className="p-3 rounded center-things">
       <div className="form-row text-left mb-2">
         <div className="col-md-6">
           <label>First Name</label>
