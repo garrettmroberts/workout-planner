@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.module.css"
+import "./Card.css"
 
 function Card({ day, workouts, jsDate }) {
   const workoutSection = workouts.map(workout => {

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import API from '../../utils/API';
 import { useStoreContext } from "../../utils/GlobalState";
-import "./style.module.css";
+import "./SignUpForm.css";
 
 
 function SignUpForm(){
