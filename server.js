@@ -12,9 +12,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-} else {
-  app.use('/static', express.static(path.join(__dirname, 'client/build')));
-}
+} 
 
 
 // Enables passport verification
@@ -23,8 +21,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Connects setver to routes
-app.use(routes);          // MOVED this line after passport.initialize()
-                          //solved error of not having passport initialized.
+app.use(routes);        
 
 // Connects to mongoDB
 const mongooseOptions = {
