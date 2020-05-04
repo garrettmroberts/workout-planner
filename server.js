@@ -18,8 +18,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Connects setver to routes
-app.use(routes);          // MOVED this line after passport.initialize()
-                          //solved error of not having passport initialized.
+app.use(routes);
 
 // Connects to mongoDB
 const mongooseOptions = {

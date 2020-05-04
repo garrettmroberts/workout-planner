@@ -100,7 +100,7 @@ function GoalsForm() {
               filtered.push(data);
             };
           });
-          // If no equipment selected, only bodyeight exercises are added
+          // If no equipment selected, only bodyweight exercises are added
         } else {
           res.data.forEach(data => {
             if (data.equipment.join("") === "") {
