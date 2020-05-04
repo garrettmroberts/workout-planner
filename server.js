@@ -12,8 +12,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+} else {
+  app.use('/static', express.static(path.join(__dirname, 'client/build')));
 }
-app.use('/static', express.static(path.join(__dirname, 'client/build')));
+
 
 // Enables passport verification
 app.use(session({ secret: 'apple butter', resave: true, saveUninitialized: true }));
