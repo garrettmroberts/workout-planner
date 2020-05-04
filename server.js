@@ -10,6 +10,8 @@ const app = express();
 // Init app middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+//Changes below
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 } 
