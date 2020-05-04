@@ -10,7 +10,7 @@ const app = express();
 // Init app middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use('/static', express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Enables passport verification
 app.use(session({ secret: 'apple butter', resave: true, saveUninitialized: true }));
