@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Calendar from './pages/Calendar';
 import CreateWorkout from './pages/CreateWorkout';
 import Search from './pages/Search';
+import './pages/calendar.module.css';
 
 function App() {
   return (
