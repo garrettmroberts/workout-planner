@@ -14,6 +14,7 @@ function WorkoutCalendar() {
     const todayCleaned = DateTime.local().toISODate();
     const todayMilliseconds = DateTime.fromISO(todayCleaned).toMillis();
     
+    console.log('in map function');
     // if statement is preventing cards from rendering initially
     // if (jsMilliseconds >= todayMilliseconds) {
       return <Card day={day} key={day} workouts={workouts} jsDate={jsDate} />
