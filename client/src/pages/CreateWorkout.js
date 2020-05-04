@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import WorkoutForm from '../components/WorkoutForm';
 import { useStoreContext } from '../utils/GlobalState'
 import API from '../utils/API';
+import './calendar.module.css';
 
 
 function CreateWorkout(){

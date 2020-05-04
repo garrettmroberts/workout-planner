@@ -5,7 +5,7 @@ import SignUpForm from '../components/SignUpForm';
 import API from '../utils/API';
 import CurrentUser from '../components/CurrentUser';
 import Greeting from '../components/Greeting';
-
+import './calendar.module.css';
 
 function Home() {
   const [state, dispatch] = useStoreContext();

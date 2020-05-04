@@ -4,7 +4,7 @@ import { useStoreContext } from "../utils/GlobalState";
 import GoalsForm from "../components/GoalsForm";
 import WorkoutCalendar from "../components/WorkoutCalendar";
 import API from '../utils/API';
-import "./calendar.css";
+import "./calendar.module.css";
 
 function Calendar() {
   const [store, dispatch] = useStoreContext();

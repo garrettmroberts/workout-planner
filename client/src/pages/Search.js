@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useStoreContext } from '../utils/GlobalState';
 import DropDown from '../components/DropDown';
 import API from '../utils/API';
+import './calendar.module.css';
 
 function Search(){
   const [state, dispatch] = useStoreContext();
