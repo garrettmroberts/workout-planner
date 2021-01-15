@@ -3,6 +3,10 @@
 ![Contributors](https://img.shields.io/github/contributors/garrettmroberts/workout-planner)
 ![Last Commit](https://img.shields.io/github/last-commit/garrettmroberts/workout-planner)
 
+# WARNING
+
+App is built using a mongoDB service no longer in existence.  Until a new db is connected, app will not funtion as expected.
+
 ## User Story
 
 AS a busy fitness enthusiast  
